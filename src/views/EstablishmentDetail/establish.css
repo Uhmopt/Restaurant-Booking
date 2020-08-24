@@ -1,0 +1,34 @@
+.react-swipeable-view-container > div {
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+}
+
+tbody.MuiTableBody-root > tr.MuiTableRow-root:active {
+    background-color: white !important;
+    transition: .4s;
+}
+
+tbody.MuiTableBody-root > tr.MuiTableRow-root:hover {
+    background-color: #dedddd;
+}
+
+tbody.MuiTableBody-root > tr.MuiTableRow-root {
+    transition: .7s;
+}
+
+.menu-section-header {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 23px;
+    padding: 10px;
+    transition: 1s;
+    margin-top: 5px;
+    box-shadow: 1px 3px 8px -3px;
+    align-items: center;
+}
+
+.menu-section-body {
+    border: 1px solid #a7a7a7;
+    border-radius: 5px;
+}
