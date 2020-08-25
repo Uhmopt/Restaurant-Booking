@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import image1 from "assets/img/mg1.jpg";
 import image2 from "assets/img/mg2.jpg";
 import image3 from "assets/img/mg3.jpg";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css' 

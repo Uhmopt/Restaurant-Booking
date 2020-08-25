@@ -12,35 +12,14 @@ import axios from "axios";
 
 const columns = [
   { id: 'tabsId', label: 'TabId' },
-  { id: 'establishmentID', label: 'Establishment' },
-  { id: 'customerID', label: 'User' },
-  { id: 'tableNo', label: 'Table' },
-  { id: 'state', label: 'Name' },
-  { id: 'updates', label: 'Updates' },
-  { id: 'time', label: 'Time' },
-  { id: 'orders', label: 'Orders' },
+  { id: 'name', label: 'User' },
+  { id: 'email', label: 'Emali' },
+  { id: 'state', label: 'State' },
   { id: 'total', label: 'Total' }
 ];
-function createData(tabsId, establishmentID, customerID, tableNo, state, updates, orders, total) {
-  tabsId = "tableId";
-  establishmentID = "John's Pub";
-  customerID = "JohnDae"
-  return { tabsId, establishmentID, customerID, tableNo, state, updates, orders, total };
+function createData(tabsId, name, email, state, total) {
+  return { tabsId, name, email, state, total };
 }
-
-  //Change seconds to time
-  function secondsToHms(d) {
-
-		var sec_num = Number(d) // don't forget the second param
-		var hours   = Math.floor(sec_num / 3600);
-		var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-		var seconds = sec_num - (hours * 3600) - (minutes * 60);
-	
-		if (hours   < 10) {hours   = "0"+hours;}
-		if (minutes < 10) {minutes = "0"+minutes;}
-		if (seconds < 10) {seconds = "0"+seconds;}
-		return hours + ':' + minutes;
-  }
 
 const useStyles = makeStyles({
   root: {
@@ -55,7 +34,9 @@ export default function StickyHeadTable(props) {
   const [rows, setRows] = React.useState([]);
   React.useEffect(() => {
       initGetData();
-  }, []);
+  },
+  // eslint-disable-next-line
+  [props.data]);
 
 
 	function initGetData () {
@@ -83,22 +64,23 @@ export default function StickyHeadTable(props) {
   function setTableData (data) {
     let fk_row = [];
       data.tabs.forEach(element => {
-      fk_row.push( createData(JSON.stringify(element.id), element.establishmentID, element.customerID, element.tableNo, element.state, 
-      (element.updates).toString(), (element.orders).toString(),element.total))
+      fk_row.push( createData(element.tableNo, element.customerName, element.customerEmail, element.state, element.total))
     });
+    console.log(fk_row)
     fk_row = searchData(fk_row)
+    console.log(fk_row)
     setRows(fk_row);
   }
 
   function searchData (data) {
-
-    data= data.filter(function(item) {
-      if (Date.parse( props.data.startDate) < Date.parse(item.date) && Date.parse(item.date) < Date.parse(props.data.endDate) ) {
-        return true;
-      } else {
-        return false;
+    if (props.data.customer&&props.data.customer.length !== 0) 
+    {
+      if (data) {
+        data= data.tabs.filter(function(item) {
+          return item.customerName === props.data.customer
+        });
       }
-    });
+    }
     return (data);
   }
 

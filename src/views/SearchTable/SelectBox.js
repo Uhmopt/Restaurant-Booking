@@ -17,11 +17,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleSelect(props) {
   const classes = useStyles();
-  const [distance, setDistance] = React.useState('');
-  
-  React.useEffect(() => {
-    setDistance(props.data)
-  }, [props.data]);
 
   const handleChange = (event) => {
     props.onClick(event.target.value)

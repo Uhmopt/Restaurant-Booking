@@ -80,19 +80,6 @@ export default function FormDialog(props) {
     setBasket(fk_basket);
   };
 
-  
-  const configItem = (data) => {
-    var items = {};
-    data.forEach((element)=>{
-      if (items[ element.title ]) {
-        items[ element.title ] = Number(items[ element.title ]) + Number(element.mount);
-      } else {
-        items[ element.title ] = element.mount;
-      }
-    })
-    return items
-  };
-
   const caculateTotalPrice = (data) => {
     var total = 0;
     data.forEach(element => {

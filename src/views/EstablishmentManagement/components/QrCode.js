@@ -14,7 +14,7 @@ class Demo extends Component {
     }
   render() {
     return<div>
-      <QRCode value={this.state.value} size={250}/>
+      <QRCode value={this.state.value} size={150}/>
     </div>
   }
 }

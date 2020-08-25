@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
@@ -27,15 +26,6 @@ const styles = (theme) => ({
     color: theme.palette.grey[500],
   },
 });
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
-  },
-}));
 
 const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
@@ -66,7 +56,6 @@ const DialogActions = withStyles((theme) => ({
 
 export default function CustomizedDialogs(props) {
 
-  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState("");
   const [desc, setDesc] = React.useState("");
@@ -84,11 +73,6 @@ export default function CustomizedDialogs(props) {
 
   function handleDesc(e) {
     setDesc(e.target.value)
-  }
-
-  function handleSave(e) {
-    props.handleChange({ title, desc })
-    setOpen(false);
   }
 
   return (

@@ -24,8 +24,6 @@ export default function MaterialTableDemo( props ) {
       start[i] = tabledata[i].start.getTime() - new Date(xx).getTime();
       end[i] = tabledata[i].end.getTime() - new Date(yy).getTime();
     }
-    console.log(day, start, end);
-
     props.specialDay(tabledata)
   }
 

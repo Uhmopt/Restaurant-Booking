@@ -30,7 +30,7 @@ import styles1 from "assets/jss/material-kit-react/views/components.js";
 import styles2 from "assets/jss/material-kit-react/views/componentsSections/basicsStyle.js";
 import QrCode from "./components/QrCode"
 // print the image
-import { exportComponentAsJPEG, exportComponentAsPDF, exportComponentAsPNG } from "react-component-export-image";
+import { exportComponentAsPNG } from "react-component-export-image";
 
 // toastr
 import toastr from 'toastr'
@@ -40,7 +40,6 @@ import axios from 'axios';
 const useStyles = makeStyles(styles1);
 const useStyles_basic = makeStyles(styles2);
 export default function LoginPage() {
-	establishment = JSON.parse(localStorage.getItem("establishment"));
 	const history = useHistory();
 	const classes = useStyles();
 	const classes_bb = useStyles_basic();
@@ -197,7 +196,7 @@ export default function LoginPage() {
 
 			"cuisines": cuisines
 		}
-		if (localStorage.getItem('insertEstablishmentFlag') == "false") {
+		if (localStorage.getItem('insertEstablishmentFlag') === "false") {
 			data["id"] = eid;
 			data["published"] = published;
 			var config = {
@@ -219,6 +218,7 @@ export default function LoginPage() {
 				});
 				
 		} else {
+			// eslint-disable-next-line
 			var config = {
 				method: 'post',
 				url: 'https://cors-anywhere.herokuapp.com/https://ontab.co.uk/v1/establishment/register',
@@ -273,7 +273,8 @@ export default function LoginPage() {
 	}
 
 	React.useEffect(() => {
-		if (localStorage.getItem('insertEstablishmentFlag') == "false") {
+		if (localStorage.getItem('insertEstablishmentFlag') === "false") {
+			// eslint-disable-next-line
 			establishment = JSON.parse(localStorage.getItem("establishment"));
 			console.log(establishment)
 			setId(establishment.id);
@@ -299,9 +300,9 @@ export default function LoginPage() {
 			setSunDuration(establishment.reservationConfiguration.sunDuration);
 			setPublished(establishment.published);
 			setWWW(establishment.www);
-			setTakeAwayAvailable(establishment.clickCollectAvailable == true);
-			setTableOrderingAvailable(establishment.tableOrderingAvailable == true);
-			setReservationAvailable(establishment.reservationAvailable == true);
+			setTakeAwayAvailable(establishment.clickCollectAvailable === true);
+			setTableOrderingAvailable(establishment.tableOrderingAvailable === true);
+			setReservationAvailable(establishment.reservationAvailable === true);
 			setCuisines(establishment.cuisines);
 			setLastOrderAsMinutesFromClose(establishment.operatingHours.lastOrderAsMinutesFromClose)
 			setLastReservationAsMinutesFromClose(establishment.operatingHours.lastReservationAsMinutesFromClose)
@@ -339,7 +340,7 @@ export default function LoginPage() {
 							
 							<GridItem xs={12}>
 								{
-									localStorage.getItem("insertEstablishmentFlag") == "false" ?
+									localStorage.getItem("insertEstablishmentFlag") === "false" ?
 										<EstablishmentImage imageUrl={image} image={handleUpload} /> : ""
 								}
 
@@ -604,7 +605,7 @@ export default function LoginPage() {
 										<GridContainer style={{ marginBottom: "30px", marginTop: "30px", paddingLeft: "13px", paddingRight: "13px" }} spacing={1}>
 											<GridItem md={6} sm={12} >
 												<GridContainer spacing={1}>
-													<GridItem md={3} sm={3}><h5 style={{ textAlign: "center", textAlign: "center", fontWeight: "bold", fontSize: "20px" }}>Duration:</h5></GridItem>
+													<GridItem md={3} sm={3}><h5 style={{ textAlign: "center", fontWeight: "bold", fontSize: "20px" }}>Duration:</h5></GridItem>
 													<GridItem md={3} sm={3}>
 														<TextField id="monDuration" label="Mon" value={monDuration} variant="outlined" onChange={handleDuration} />
 													</GridItem>

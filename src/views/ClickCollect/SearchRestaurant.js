@@ -6,7 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import SelectBox from "../MainPage/Sections/SelectBox";
-import { useHistory } from "react-router-dom";
 
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -32,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 	selectEmpty: {
 		marginTop: theme.spacing(2),
 	},
+	// eslint-disable-next-line
 	root: {
 		minWidth: 275,
 	},
@@ -45,26 +45,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 	pos: {
 		marginBottom: 12,
-	},
-	formControl: {
-		margin: theme.spacing(1),
-		minWidth: 120,
-	},
-	selectEmpty: {
-		marginTop: theme.spacing(2),
-	},
+	}
 }));
 
 export default function SimpleCard() {
 
-	const history = useHistory();
 	const classes = useStyles();
-	const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
 	const [click, setClick] = React.useState("");
 	const [distance, setDistance] = React.useState("");
-	const handleDateChange = (date) => {
-		setSelectedDate(date);
-	};
 
 	React.useEffect(() => {
 		setClick(localStorage.getItem("lsClickSearch"));
@@ -73,7 +61,9 @@ export default function SimpleCard() {
 			console.log( click, distance );
 		}, 600);
 
-	}, []);
+	},
+	// eslint-disable-next-line
+	[]);
 
 	function handleSearch () {
 		const headers = {
@@ -84,12 +74,11 @@ export default function SimpleCard() {
 					localStorage.setItem('restaurantList', JSON.stringify(res.data));
 					localStorage.setItem('lsClickSearch', click);
 					localStorage.setItem('lsClickDistance', distance);
-					history.push('/click-collect');
+					window.location.reload(true);
 			}).catch(function (error) {
 				toastr.error('Check you postcode and distance', error);
 			});
 	}
-
 	return (
 				<GridContainer justify="center">
 					<GridItem md={8} sm={12}>

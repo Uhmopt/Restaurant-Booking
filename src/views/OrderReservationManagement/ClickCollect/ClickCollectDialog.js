@@ -30,7 +30,6 @@ export default function FormDialog(props) {
 	const [stateOrder, setStateOrder] = React.useState("REQUESTED");
 
 	React.useEffect(() => {
-		console.log(props.selectedData.state)
 		setStateOrder(props.selectedData.state)
 	}, [props]);
 
@@ -41,9 +40,7 @@ export default function FormDialog(props) {
 	}
 
 	function handleChange (e) {
-		console.log(e.target.value)
 		setStateOrder(e.target.value);
-		console.log(stateOrder);
 	}
 
 	function handleSave() {
@@ -88,10 +85,7 @@ export default function FormDialog(props) {
 
 		// minutes as 2 digits (mm)
 		var minutes = ("0" + date_ob.getMinutes()).slice(-2);
-
-		// seconds as 2 digits (ss)
-		var seconds = ("0" + date_ob.getSeconds()).slice(-2);
-
+		// eslint-disable-next-line
 		if(type=="d"){
 			return( year + "-" + month + "-" +  date);
 		} else {
@@ -101,8 +95,10 @@ export default function FormDialog(props) {
 
 	function objectToString (obj, v) {
 		var string = "";
+		// eslint-disable-next-line
 		if (v == 0) {
 			for (const key in obj) {
+				// eslint-disable-next-line
 				string = string + key + ":" + " " + obj[key] + ", ";
 			}
 		} else {

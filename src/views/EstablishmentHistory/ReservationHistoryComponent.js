@@ -22,39 +22,40 @@ function createData(reserveId, userID, tableID, covers, reservationTime, state) 
 	userID = "HarryPotter";
 	return {reserveId, userID, tableID, covers, reservationTime, state};
 }
-	//Change seconds to time
-	function secondsToHms(d) {
 
-	// unix timestamp
-	var ts = d;
+//Change seconds to time
+function secondsToHms(d) {
 
-	// convert unix timestamp to milliseconds
-	var ts_ms = ts * 1000;
+// unix timestamp
+var ts = d;
 
-	// initialize new Date object
-	var date_ob = new Date(ts_ms);
+// convert unix timestamp to milliseconds
+var ts_ms = ts * 1000;
 
-	// year as 4 digits (YYYY)
-	var year = date_ob.getFullYear();
+// initialize new Date object
+var date_ob = new Date(ts_ms);
 
-	// month as 2 digits (MM)
-	var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+// year as 4 digits (YYYY)
+var year = date_ob.getFullYear();
 
-	// date as 2 digits (DD)
-	var date = ("0" + date_ob.getDate()).slice(-2);
+// month as 2 digits (MM)
+var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
 
-	// hours as 2 digits (hh)
-	var hours = ("0" + date_ob.getHours()).slice(-2);
+// date as 2 digits (DD)
+var date = ("0" + date_ob.getDate()).slice(-2);
 
-	// minutes as 2 digits (mm)
-	var minutes = ("0" + date_ob.getMinutes()).slice(-2);
+// hours as 2 digits (hh)
+var hours = ("0" + date_ob.getHours()).slice(-2);
 
-	// seconds as 2 digits (ss)
-	var seconds = ("0" + date_ob.getSeconds()).slice(-2);
+// minutes as 2 digits (mm)
+var minutes = ("0" + date_ob.getMinutes()).slice(-2);
 
-	// date & time as YYYY-MM-DD hh:mm:ss format: 
-	return (year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
-	}
+// seconds as 2 digits (ss)
+var seconds = ("0" + date_ob.getSeconds()).slice(-2);
+
+// date & time as YYYY-MM-DD hh:mm:ss format: 
+return (year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
+}
 
 const useStyles = makeStyles({
 	root: {
@@ -70,11 +71,15 @@ export default function StickyHeadTable( props ) {
 
 	React.useEffect(() => {
 		initGetData();
-	}, []);
+	}, 
+	// eslint-disable-next-line
+	[]);
 	React.useEffect(() => {
 		console.log(props.data,"this is the props")
 		setTableData();
-	}, [props]);
+	},
+	// eslint-disable-next-line
+	[props]);
 
 	function initGetData () {
 		var token = localStorage.getItem("access_token");
@@ -98,16 +103,15 @@ export default function StickyHeadTable( props ) {
 		});
 	}
 	function setTableData (data) {
-		console.log(data, "this is the data")
 		let fk_row = [];
 		if (!data) return [];
-		if (data.length != 0) {
+		if (data.length !== 0) {
 			data.reservations.forEach(element => {
 				fk_row.push( createData(element.friendlyID, element.customerName, element.tableID,
 				element.covers, secondsToHms(element.reservationTime), element.state, (element.lastModifiedDate).substr(0, 10), element.lastModifiedBy))
 			});
 		}
-		console.log(fk_row)
+		fk_row = searchData(fk_row);
 		setRows(fk_row);
 	}
 	const classes = useStyles();
@@ -118,7 +122,7 @@ export default function StickyHeadTable( props ) {
 		console.log(data, props.data.startDate, props.data.endDate);
 
 		data= data.reservations.filter(function(item) {
-			if (item.customerName == props.data.customer ) {
+			if (item.customerName === props.data.customer ) {
 				return true;
 			} else {
 				return false;

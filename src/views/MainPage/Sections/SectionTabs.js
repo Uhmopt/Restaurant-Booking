@@ -101,7 +101,6 @@ function CssThemeExample() {
 	}
 
 	function handledistance(e) {
-		console.log(e, "hey this iss the distance");
 		setDistance(e)
 		setBookDistance(e);
 	}

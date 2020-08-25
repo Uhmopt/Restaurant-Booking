@@ -49,7 +49,7 @@ export default function RecipeReviewCard(props) {
 
   const[open, setOpen] = React.useState(false);
 
-  const[token, setToken] = React.useState(localStorage.getItem("access_token"));
+  const[token] = React.useState(localStorage.getItem("access_token"));
 
   function handleManage () {
     const data = {...props.data}
@@ -131,7 +131,7 @@ export default function RecipeReviewCard(props) {
                 <QueryBuilderIcon />
               </IconButton>
               {
-                authority=="MANAGER"?
+                authority==="MANAGER"?
                 <IconButton aria-label="settings" onClick={handleDelete}>
                   <DeleteIcon />
                 </IconButton>:
@@ -156,7 +156,7 @@ export default function RecipeReviewCard(props) {
         <CardActions disableSpacing style={{marginBottom: "16px"}}>
           <GridContainer>
           {
-            authority=="MANAGER"?
+            authority==="MANAGER"?
             <GridContainer>
             <GridItem md={6} >
               <Button variant="outlined" onClick={handleManage} startIcon={<EditIcon />} color="primary" style={{ width: "100%", marginTop: "10px" }}>

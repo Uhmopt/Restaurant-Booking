@@ -64,7 +64,7 @@ export default function Header(props) {
   const brandComponent = <Button className={classes.title}>{brand}</Button>;
   return (
     <AppBar className={appBarClasses}>
-      {/* <CookieConsent
+      <CookieConsent
         location="bottom"
         buttonText="Sure"
         cookieName="myAwesomeCookieName2"
@@ -74,7 +74,7 @@ export default function Header(props) {
       >
         This website uses cookies to enhance the user experience.
         
-      </CookieConsent> */}
+      </CookieConsent>
       <Toolbar className={classes.container}>
         {leftLinks !== undefined ? brandComponent : null}
         <div className={classes.flex}>

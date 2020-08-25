@@ -26,8 +26,13 @@ export default function Components(props) {
 	const[authority] = React.useState(localStorage.getItem("authority"));
 
 	React.useEffect(() => {
+		if( localStorage.getItem("authority") !== "CUSTOMER" ){
+			history.push("main-page");
+		}
 		getEstablishment()
-	}, []);
+	},
+	// eslint-disable-next-line
+	[]);
 
 	// Get establishment by user Token
 	function getEstablishment() {
@@ -55,13 +60,16 @@ export default function Components(props) {
 			});
 
 	}
+	
 	function handleInsert() {
 		localStorage.setItem('insertEstablishmentFlag', true);
 		history.push('establishment-submit')
 	}
+
 	function handleDelete() {
 		getEstablishment();
 	}
+
 	return (
 		<div style={{ background: "#fff" }}>
 			<Header
@@ -82,7 +90,7 @@ export default function Components(props) {
 					</GridItem>
 					<GridItem md={3} xs={12}>
 						{
-							authority=="MANAGER"?
+							authority==="MANAGER"?
 							<Button
 								variant="outlined"
 								color="primary"

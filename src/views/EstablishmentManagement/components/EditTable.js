@@ -1,10 +1,12 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import MaterialTable from 'material-table';
 let tableData = [];
 export default function MaterialTableDemo( props ) {
   React.useEffect(() => { 
     initialTable()
-  }, [props.data]); 
+  },
+  // eslint-disable-next-line
+  [props.data]); 
   function initialTable() {
     const fk_state = []
     for( var key in props.data ){
@@ -24,7 +26,7 @@ export default function MaterialTableDemo( props ) {
 
   function handleChange(tabledata) {
     let sendData = {};
-    tabledata.map((element)=> {
+    tabledata.forEach((element)=> {
       sendData[element.table] = element.cover
     })
     props.table(sendData)
@@ -51,7 +53,7 @@ export default function MaterialTableDemo( props ) {
     tableData = [...state, event];
     tableData = tableData.filter(
         function( obj ) {
-          return obj.table != event.table && obj.cover != event.cover;
+          return obj.table !== event.table && obj.cover !== event.cover;
         }
     );
     // setState(tableData);

@@ -79,7 +79,7 @@ export default function CustomizedDialogs(props) {
 		});
 
 	const handleChange = (e) => {
-		if (e.target.name == "item_price" || e.target.name == "number_of_kcal") {
+		if (e.target.name === "item_price" || e.target.name === "number_of_kcal") {
 			if (e.target.value < 0) {
 				let fk_state = {...state};
 				fk_state[e.target.name] = 0;

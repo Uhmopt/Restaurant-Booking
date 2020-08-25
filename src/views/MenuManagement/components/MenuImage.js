@@ -65,6 +65,7 @@ class ImageUpload extends React.Component {
 		let { imagePreviewUrl } = this.state;
 		let $imagePreview = null;
 		if (imagePreviewUrl) {
+			// eslint-disable-next-line
 			$imagePreview = <img src={imagePreviewUrl} />;
 		} else {
 			$imagePreview = (

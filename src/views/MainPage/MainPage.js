@@ -29,7 +29,7 @@ export default function Components(props) {
 	const classes = useStyles();
 	const { ...rest } = props;
 	return (
-		<div style={{background:"linear-gradient(0deg, #673AB7 0%, rgb(255, 255, 255) 54%, rgb(255, 255, 255) 100%)"}}>
+		<div style={{ background: "linear-gradient(0deg, #673AB7 0%, rgb(255, 255, 255) 54%, rgb(255, 255, 255) 100%)" }}>
 			<Header
 				brand="OnTab"
 				rightLinks={<HeaderLinks />}
@@ -44,12 +44,12 @@ export default function Components(props) {
 			<Parallax filter>
 				<BackgroundSlider
 					images={[image2, image1, image3, image5, image4]}
-					duration={10} transition={1}/>
+					duration={10} transition={1} />
 				<div className={classes.container}>
 					<GridContainer>
 						<GridItem>
 							<div className={classes.brand}>
-								<SectionTabs/>
+								<SectionTabs />
 							</div>
 						</GridItem>
 					</GridContainer>
@@ -57,7 +57,7 @@ export default function Components(props) {
 			</Parallax>
 
 			<div className={classes.container}>
-				<SectionExamples/>
+				<SectionExamples />
 			</div>
 			<SectionNavbars />
 			<Footer />

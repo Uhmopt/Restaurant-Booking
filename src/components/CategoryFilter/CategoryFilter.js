@@ -4,8 +4,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
-// material icon
-import FilterIcon from '@material-ui/icons/Filter';
 
 import axios from "axios"
 
@@ -27,7 +25,9 @@ export default function Components(props) {
 	React.useEffect(() => {
 		getInitCuisines();
 		getInitDiets();
-	}, []);
+	},
+	// eslint-disable-next-line
+	[]);
 
 	const handleChange = (event, i) => {
 		const fk_diets = [ ...diets ];

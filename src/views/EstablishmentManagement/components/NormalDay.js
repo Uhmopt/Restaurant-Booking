@@ -16,7 +16,6 @@ import IconButton from '@material-ui/core/IconButton';
 import WeekDay from "./WeekDay.js";
 const useStyles = makeStyles(styles);
 
-let tableData = [];
 export default function MaterialTableDemo( props ) {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
@@ -27,7 +26,9 @@ export default function MaterialTableDemo( props ) {
 
 	useEffect(() => {
 		PropsTimeToHMS();
-	}, [props.data]);
+	},
+	// eslint-disable-next-line
+	[props.data]);
 
 	useEffect(() => {
 		setWeek("MONDAY")
@@ -61,7 +62,9 @@ export default function MaterialTableDemo( props ) {
 		let fk_normalDay = {...normalDay};
 		let flag = 0;
 		let fk_day = week;
-		for(var i in fk_normalDay) {
+		for(
+			// eslint-disable-next-line
+			var i in fk_normalDay) {
 			// If the insert special day is exist, add the work time
 			if(fk_normalDay.hasOwnProperty(fk_day)) {
 				fk_normalDay[fk_day].push({ "open": start, "close": end });
@@ -70,7 +73,7 @@ export default function MaterialTableDemo( props ) {
 			}
 		}
 		// If the insert special day is none, add new work time
-		if (flag==0) {
+		if (flag===0) {
 			let fk_day1 = {};
 			fk_day1[fk_day] = [{ "open":start, "close": end }];
 			fk_normalDay = Object.assign( fk_day1, fk_normalDay );
@@ -83,7 +86,7 @@ export default function MaterialTableDemo( props ) {
 		let fk_normalDay = normalDay;
 		let value = e.target.id.split("||");
 		Object.keys(fk_normalDay).forEach(function(key) {
-			if (key == value[0]) { 
+			if (key === value[0]) { 
 				delete fk_normalDay[value[0]][Number(value[1])][value[2]];
 				fk_normalDay[value[0]][Number(value[1])][value[2]] = e.target.value; 
 			} 
@@ -93,7 +96,7 @@ export default function MaterialTableDemo( props ) {
 
 	function handleDelete(date, flag) {
 		let fk_normalDay = normalDay;
-		if(flag == 1) {
+		if(flag === 1) {
 			Object.keys(fk_normalDay).forEach(item => {
 				if(date === item) {
 					delete fk_normalDay[item];
@@ -114,7 +117,8 @@ export default function MaterialTableDemo( props ) {
 	function PropsTimeToHMS () { 
 		let fk_state = JSON.parse(props.data); 
 		for(var key in fk_state) {
-			fk_state[key].map((element, i)=>{
+			// eslint-disable-next-line
+			fk_state[key].forEach((element, i)=>{
 				fk_state[key][i].open = secondsToHms(element.open);
 				fk_state[key][i].close = secondsToHms(element.close);
 
@@ -183,14 +187,13 @@ export default function MaterialTableDemo( props ) {
 			<GridContainer style={{border: "1px solid", color: "#a9a9a9", borderRadius: "5px"}}>
 				{
 					Object.entries(normalDay).map((parent, i)=>{
-						let splDay = parent[0];
 						return(
 							<GridContainer key = {i} style={{marginBottom: "5px", padding:"5px", borderTopRightRadius: "5px", borderTopLeftRadius: "5px"}}>
 									<GridItem sm={4}>
 										<h5> {parent[0]} </h5>
 									</GridItem>
-									<GridItem sm={3}><h4></h4></GridItem>
-									<GridItem sm={3}><h4></h4></GridItem>
+									<GridItem sm={3}></GridItem>
+									<GridItem sm={3}></GridItem>
 									<GridItem sm={2}>
 										<IconButton  onClick={ev => handleDelete(parent[0], 1)} >
 											<Icon>delete</Icon>
@@ -200,7 +203,7 @@ export default function MaterialTableDemo( props ) {
 										parent[1].map((child, j)=>{
 											return(
 												<GridContainer key={j}>
-													<GridItem sm={4}><h4></h4></GridItem>
+													<GridItem sm={4}></GridItem>
 													<GridItem sm={3}>
 														<TextField
 															id={ parent[0] + "||" + j + "||open" }

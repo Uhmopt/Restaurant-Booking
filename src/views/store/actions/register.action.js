@@ -4,14 +4,14 @@ export const REGISTER_ERROR = 'REGISTER_ERROR';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 
 export function submitRegister(data) {
-	console.log(data);
-	var data = `{\n    "firstName": ${data.firstName},\n    "surname": ${data.username},\n    "phone": ${data.phone},\n    "email": ${data.email},\n    "username": ${data.username},\n    "password": ${data.password},\n    "roles": [\n        "ADMIN"\n    ]\n}`;
+
+	var fk_data = `{\n    "firstName": ${data.firstName},\n    "surname": ${data.username},\n    "phone": ${data.phone},\n    "email": ${data.email},\n    "username": ${data.username},\n    "password": ${data.password},\n    "roles": [\n        "ADMIN"\n    ]\n}`;
 
 	var config = {
 	  method: 'post',
 	  url: 'https://ontab.co.uk/v1/user/register',
 	  headers: { },
-	  data : data
+	  data : fk_data
 	};
 
 	const request = axios(config); 

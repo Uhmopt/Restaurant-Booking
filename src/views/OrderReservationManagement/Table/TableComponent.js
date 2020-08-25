@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,42 +8,31 @@ import Dialog from './TableDialog.js'
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import axios from 'axios'
 
-const useStyles = makeStyles({
-  root: {
-	width: '100%'
-  },
-  container: {
-	maxHeight: 650,
-  },
-})
-
 export default function MediaCard(props) {
-	const accept = {
-		backgroundColor: "#72a0ff",
-		padding: "5px",
-		textAlignLast: "center",
-		borderRadius: "6px"
-	}
-	const decline = {
-		backgroundColor: "#66f7c5",
-		padding: "5px",
-		textAlignLast: "center",
-		borderRadius: "6px"
-	}
-	const close = {
-		backgroundColor: "#f76684",
-		padding: "5px",
-		textAlignLast: "center",
-		borderRadius: "6px"
-	}
-	const selectTab = {
-		backgroundColor: "#ffd8a2",
-		padding: "5px",
-		textAlignLast: "center",
-		borderRadius: "6px"
-	}
-	const classes = useStyles();
-
+	// const accept = {
+	// 	backgroundColor: "#72a0ff",
+	// 	padding: "5px",
+	// 	textAlignLast: "center",
+	// 	borderRadius: "6px"
+	// }
+	// const decline = {
+	// 	backgroundColor: "#66f7c5",
+	// 	padding: "5px",
+	// 	textAlignLast: "center",
+	// 	borderRadius: "6px"
+	// }
+	// const close = {
+	// 	backgroundColor: "#f76684",
+	// 	padding: "5px",
+	// 	textAlignLast: "center",
+	// 	borderRadius: "6px"
+	// }
+	// const selectTab = {
+	// 	backgroundColor: "#ffd8a2",
+	// 	padding: "5px",
+	// 	textAlignLast: "center",
+	// 	borderRadius: "6px"
+	// }
 	const [tabList, setTabList] = React.useState([]);
 	const [open, setOpen] = React.useState(false);
 	const [select, setSelect] = React.useState({});
@@ -83,7 +71,7 @@ export default function MediaCard(props) {
 		<GridItem sm={12} style={{ paddingTop: "30px", color: "black", textAlign: "-webkit-right"}}><h4 ><LocalLibraryIcon /> <font>Table Orders: 13</font></h4></GridItem>
 		<GridItem sm={12} >
 			<GridContainer spacing={2} style={{ paddingTop: "30px" }}>
-			{tabList.length!=0?tabList.map((element, i)=>{
+			{tabList.length!==0?tabList.map((element, i)=>{
 				return (
 					<GridItem sm={6} key={i}>
 						<Card onClick={()=>handleClick(element)}>

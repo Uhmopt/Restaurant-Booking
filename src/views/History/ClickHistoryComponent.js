@@ -74,7 +74,9 @@ export default function StickyHeadTable(props) {
 
 	React.useEffect(() => {
 		initGetData();
-	}, []);
+	}, 
+	// eslint-disable-next-line
+	[]);
 
 	function initGetData() {
 		var config = {
@@ -122,12 +124,14 @@ export default function StickyHeadTable(props) {
 
 	function objectToString(obj, v) {
 		var string = "";
-		if (v == 0) {
+		if (v === 0) {
 			for (const key in obj) {
+				// eslint-disable-next-line
 				string = string + key + ":" + " " + obj[key] + ", ";
 			}
 		} else {
 			for (const key in obj) {
+				// eslint-disable-next-line
 				string = string + obj[key] + ", ";
 			}
 		}

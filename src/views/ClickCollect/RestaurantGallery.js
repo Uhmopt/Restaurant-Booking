@@ -20,15 +20,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const cardstyle={
-  padding: "8px",
-  color: "white",
-  position: "absolute",
-  marginTop: "-50px",
-  background: "#00000080",
-  width: "100%",
-  textAlign: "left"
-}
 export default function Components(props) {
   console.log(props.list)
 	const history = useHistory();
@@ -39,23 +30,6 @@ export default function Components(props) {
     localStorage.setItem('selectedEstablishmentId', id);
     history.push('establishment-detail');
   }
-
-  function objectToString (obj, v) {
-		var string = "";
-		if (v == 0) {
-			for (const key in obj) {
-				string = string + key + ":" + " " + obj[key] + ", ";
-			}
-		} else {
-			for (const key in obj) {
-				string = string + obj[key] + ", ";
-			}
-		}
-		string = string.substr(0, string.length - 2);
-		return string
-	}
-
-
   
   return (
     <div className={classes.container} style={{marginTop:"10px"}}>

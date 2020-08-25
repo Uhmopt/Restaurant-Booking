@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from '@material-ui/core/styles';
@@ -79,7 +79,7 @@ export default function LoginPage(props) {
 
 	React.useEffect(() => {
 		var flag = localStorage.getItem('menuFlag');
-		if (flag == "false") {
+		if (flag === "false") {
 			let fk_menu = JSON.parse(localStorage.getItem('selectedMenu'));
 			setMenus(fk_menu);
 			setTitle(fk_menu.title);
@@ -174,7 +174,7 @@ export default function LoginPage(props) {
 
 	function submitMenu() {
 
-		if (localStorage.getItem('menuFlag') == "false") {
+		if (localStorage.getItem('menuFlag') === "false") {
 			const fk_menus = { ...menus };
 			fk_menus.title = title;
 			fk_menus.desc = desc;
@@ -225,6 +225,7 @@ export default function LoginPage(props) {
 				"allergyAdvice": allergyAdvice,
 				"sections": fk_menus.sections
 			}
+			// eslint-disable-next-line
 			var config = {
 				method: 'post',
 				url: 'https://cors-anywhere.herokuapp.com/https://ontab.co.uk/v1/menu/create',

@@ -7,14 +7,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import { useTheme } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 
 export default function ResponsiveDialog(props) {
   const history = useHistory();
-  const theme = useTheme();
   const token = localStorage.getItem("access_token");
   const handleBook= () => {
     props.dialogClose();
@@ -54,12 +52,14 @@ export default function ResponsiveDialog(props) {
 
     function objectToString (obj, v) {
         var string = "";
-        if (v == 0) {
+        if (v === 0) {
             for (const key in obj) {
+                // eslint-disable-next-line
                 string = string + key + ":" + " " + obj[key] + ", ";
             }
         } else {
             for (const key in obj) {
+                // eslint-disable-next-line
                 string = string + obj[key] + ", ";
             }
         }

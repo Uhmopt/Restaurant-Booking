@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from '@material-ui/core/styles';
@@ -52,7 +52,7 @@ const DialogActions = withStyles((theme) => ({
 
 
 export default function LoginPage(props) {
-	const [state, setState] = React.useState({});	
+	const [state, setState] = React.useState({});
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const [openDeleteItem, setOpenDeleteItem] = React.useState(false);
@@ -60,7 +60,9 @@ export default function LoginPage(props) {
 	useEffect(() => {
 		console.log(props.data)
 		setState(props.data)
-	}, []);
+	},
+	// eslint-disable-next-line
+	[]);
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -79,7 +81,7 @@ export default function LoginPage(props) {
 	};
 
 	const handleChange = (e) => {
-		if (e.target.name == "item_price" || e.target.name == "number_of_kcal") {
+		if (e.target.name === "item_price" || e.target.name === "number_of_kcal") {
 			if (e.target.value < 0) {
 				let fk_state = { ...state };
 				fk_state[e.target.name] = 0;
@@ -215,7 +217,7 @@ export default function LoginPage(props) {
 									label="Vegetarian"
 								/>
 							</div>
-						</GridItem>						
+						</GridItem>
 						<GridItem sm={6}>
 							<div>
 								<FormControlLabel
@@ -274,7 +276,7 @@ export default function LoginPage(props) {
 
 								{
 									props.data.item_title ?
-									<ImageUpload data={props.no}/> : ""
+										<ImageUpload data={props.no} /> : ""
 								}
 							</GridContainer>
 						</GridItem>

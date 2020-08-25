@@ -28,7 +28,6 @@ export default function FormDialog(props) {
 
 	const classes = useStyles();
 	const [stateOrder, setStateOrder] = React.useState("RQUESTED");
-	const [select, setSelect] = React.useState({});
 
 	React.useEffect(() => {
 		// setStateOrder(props.selectedData.state)
@@ -85,10 +84,7 @@ export default function FormDialog(props) {
 		// minutes as 2 digits (mm)
 		var minutes = ("0" + date_ob.getMinutes()).slice(-2);
 
-		// seconds as 2 digits (ss)
-		var seconds = ("0" + date_ob.getSeconds()).slice(-2);
-
-		if(type=="d"){
+		if(type==="d"){
 			return( year + "-" + month + "-" +  date);
 		} else {
 			return( hours + ":" + minutes);
@@ -97,12 +93,14 @@ export default function FormDialog(props) {
 
 	function objectToString (obj, v) {
 		var string = "";
-		if (v == 0) {
+		if (v === 0) {
 			for (const key in obj) {
+				// eslint-disable-next-line
 				string = string + key + ":" + " " + obj[key] + ", ";
 			}
 		} else {
 			for (const key in obj) {
+				// eslint-disable-next-line
 				string = string + obj[key] + ", ";
 			}
 		}

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Header from "components/Header/Header.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import imagescss from "react-image-gallery/styles/scss/image-gallery.scss";
+import "react-image-gallery/styles/scss/image-gallery.scss";
 import ImageGallery from "components/GallerySlider/ImageGallery.js";
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import IconButton from '@material-ui/core/IconButton';
@@ -37,7 +37,9 @@ export default function Components(props) {
 
 	React.useEffect(() => {
 		initGetData();
-	}, []);
+	},
+	// eslint-disable-next-line
+	[]);
 
 	function initGetData() {
 		var Id = localStorage.getItem("selectedEstablishmentId");
@@ -59,12 +61,14 @@ export default function Components(props) {
 
 	function objectToString(obj, v) {
 		var string = "";
-		if (v == 0) {
+		if (v === 0) {
 			for (const key in obj) {
+				// eslint-disable-next-line
 				string = string + key + ":" + " " + obj[key] + ", ";
 			}
 		} else {
 			for (const key in obj) {
+				// eslint-disable-next-line
 				string = string + obj[key] + ", ";
 			}
 		}
@@ -88,7 +92,7 @@ export default function Components(props) {
 
 		var d = new Date();
 		var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-		if (element == "day") {
+		if (element === "day") {
 			return (d.toISOString().substr(0, 10))
 		} else {
 			return (days[d.getDay()]);
@@ -98,10 +102,10 @@ export default function Components(props) {
 	function getTodayOpenClose(data) {
 		var special = getToday("day");
 		var normal = getToday().toUpperCase();
-		if (data.operatingHours.specialDays[special] != undefined) {
+		if (data.operatingHours.specialDays[special] !== undefined) {
 			setTodayOpen(data.operatingHours.specialDays[special]);
 		} else {
-			if (data.operatingHours.normalDays[normal] != undefined) {
+			if (data.operatingHours.normalDays[normal] !== undefined) {
 				setTodayOpen(data.operatingHours.normalDays[normal]);
 			} else {
 				setTodayOpen([]);
@@ -147,7 +151,7 @@ export default function Components(props) {
 										</GridItem>
 										<GridItem sm={12} style={{ paddingLeft: "0", marginBottom: "15px" }}>
 											{
-												establishmentDetail.cuisines != undefined ? establishmentDetail.cuisines.map((element, i) => {
+												establishmentDetail.cuisines !== undefined ? establishmentDetail.cuisines.map((element, i) => {
 													return (
 														<font key={i} style={{
 															backgroundColor: "#e8e8e8",
@@ -241,7 +245,6 @@ export default function Components(props) {
 														</h5>
 														{
 															Object.entries(establishmentDetail.operatingHours.specialDays).map((parent, i) => {
-																let splDay = parent[0];
 																return (
 																	<GridContainer key={i} style={{ fontWeight: "400" }}>
 																		<GridItem sm={12} style={{ backgroundColor: "#9f9f9f17", borderRadius: "4px" }}>
@@ -272,7 +275,6 @@ export default function Components(props) {
 														</h5>
 														{
 															Object.entries(establishmentDetail.operatingHours.normalDays).map((parent, i) => {
-																let splDay = parent[0];
 																return (
 																	<GridContainer key={i} style={{ fontWeight: "400" }}>
 																		<GridItem sm={12} style={{ backgroundColor: "#9f9f9f17", borderRadius: "4px" }}>

@@ -31,7 +31,9 @@ export default function FormDialog(props) {
 
 	React.useEffect(() => {
 		setStateOrder(props.selectedData.state)
-	}, []);
+	},
+	// eslint-disable-next-line
+	[]);
 
 
 	const handleClose = () => {
@@ -82,11 +84,7 @@ export default function FormDialog(props) {
 
 		// minutes as 2 digits (mm)
 		var minutes = ("0" + date_ob.getMinutes()).slice(-2);
-
-		// seconds as 2 digits (ss)
-		var seconds = ("0" + date_ob.getSeconds()).slice(-2);
-
-		if(type=="d"){
+		if(type==="d"){
 			return( year + "-" + month + "-" +  date);
 		} else {
 			return( hours + ":" + minutes);

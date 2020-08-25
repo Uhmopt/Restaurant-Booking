@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -76,19 +76,38 @@ export default function MediaControlCard(props) {
 					</li>
 						{
 							content.gluten_free?
-							<li style={{float: "right", paddingLeft: "6px"}}><Tooltip title="Gluten Free" placement="top" arrow><img src={gluten_free}  width="30"/></Tooltip></li>:""
+							<li style={{float: "right", paddingLeft: "6px"}}>
+								<Tooltip title="Gluten Free" placement="top" arrow>
+									{/* eslint-disable-next-line */}
+									<img src={gluten_free}  width="30"/>
+								</Tooltip>
+							</li>:""
 						}
 												{
 							content.vegetarian?
-							<li style={{float: "right", paddingLeft: "6px"}}><Tooltip title="Vegetarian" placement="top" arrow><img src={vegetarian}  width="30"/></Tooltip></li>:""
+							<li style={{float: "right", paddingLeft: "6px"}}>
+								<Tooltip title="Vegetarian" placement="top" arrow>
+									{/* eslint-disable-next-line */}
+									<img src={vegetarian}  width="30"/>
+								</Tooltip>
+							</li>:""
 						}
 												{
 							content.locally_sourced?
-							<li style={{float: "right", paddingLeft: "6px"}}><Tooltip title="Locally Sourced" placement="top" arrow><img src={locally_sourced}  width="30"/></Tooltip></li>:""
+							<li style={{float: "right", paddingLeft: "6px"}}>
+								<Tooltip title="Locally Sourced" placement="top" arrow>
+									{/* eslint-disable-next-line */}
+									<img src={locally_sourced}  width="30"/>
+								</Tooltip>
+							</li>:""
 						}
 						{
 							content.organic?
-							<li style={{float: "right", paddingLeft: "6px"}}><Tooltip title="Organic" placement="top" arrow><img src={organic}  width="30"/></Tooltip></li>:""
+							<li style={{float: "right", paddingLeft: "6px"}}>
+								<Tooltip title="Organic" placement="top" arrow>
+									{/* eslint-disable-next-line */}
+									<img src={organic}  width="30"/>
+								</Tooltip></li>:""
 						}
 					</ul>
 				</CardContent>

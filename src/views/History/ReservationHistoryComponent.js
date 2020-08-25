@@ -51,7 +51,9 @@ export default function StickyHeadTable(props) {
 
 	React.useEffect(() => {
 		initGetData();
-	}, []);
+	}, 
+	// eslint-disable-next-line
+	[]);
 	React.useEffect(() => {
 		console.log(props.data, "this is the props")
 		setTableData();
@@ -80,7 +82,7 @@ export default function StickyHeadTable(props) {
 	function setTableData(data) {
 		let fk_row = [];
 		if (!data) return [];
-		if (data.length != 0) {
+		if (data.length !== 0) {
 			data.reservations.forEach(element => {
 				fk_row.push(createData(element.tableID, element.establishmentName, element.tableID,
 					element.covers, secondsToHms(element.reservationTime), element.state))

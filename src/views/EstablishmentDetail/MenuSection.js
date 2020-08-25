@@ -1,13 +1,8 @@
 import React from "react";
-// nodejs library that concatenates classes
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
 // sections for this page
 import GridContainer from 'components/Grid/GridContainer.js';
 import GridItem from 'components/Grid/GridItem.js';
-import styles from "assets/jss/material-kit-react/views/landingPage.js";
 import MenuGallery from "./MenuGallery";
-const useStyles = makeStyles(styles);
 
 export default function Components(props) {
   const [section, setSection] = React.useState([]);

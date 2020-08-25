@@ -14,8 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Component1 from './ClickHistoryComponent'
 import Component2 from './ReservationHistoryComponent'
-import Component3 from './TableHistoryComponent'
-import TextField from '@material-ui/core/TextField';
 import styles from "assets/jss/material-kit-react/views/landingPage.js";
 const useStyles1 = makeStyles(styles);
 

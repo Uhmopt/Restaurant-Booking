@@ -315,7 +315,6 @@ export default function LoginPage(props) {
 													onChange={(e)=>setRole(e.target.value)}
 													>
 														<MenuItem value={'MANAGER'}>MANAGER</MenuItem>
-														<MenuItem value={'STAFF'}>STAFF</MenuItem>
 														<MenuItem value={'CUSTOMER'}>CUSTOMER</MenuItem>
 													</Select>
 												</FormControl>

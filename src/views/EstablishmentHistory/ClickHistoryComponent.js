@@ -67,8 +67,9 @@ const useStyles = makeStyles({
 
 function objectToString(obj, v) {
 	var string = "";
-	if (v == 0) {
+	if (v === 0) {
 		for (const key in obj) {
+			// eslint-disable-next-line
 			string = string + key + ":" + " " + obj[key] + ", ";
 		}
 	} else {
@@ -90,7 +91,9 @@ export default function StickyHeadTable(props) {
 
 	React.useEffect(() => {
 		initGetData();
-	}, []);
+	}, 
+	// eslint-disable-next-line
+	[props.data]);
 
 	function initGetData() {
 		var token = localStorage.getItem("access_token");
@@ -105,7 +108,7 @@ export default function StickyHeadTable(props) {
 		axios(config)
 			.then(function (response) {
 				localStorage.setItem("orderHistory", JSON.stringify(response.data));
-				setTableData(response.data);
+				setTableData();
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -117,15 +120,14 @@ export default function StickyHeadTable(props) {
 	function setTableData() {
 		var data = JSON.parse(localStorage.getItem("orderHistory"));
 		let fk_row = [];
-		console.log(data);
-		if (data != null) {
+		if (data !== null) {
 			data.orders.forEach((element, i) => {
 				fk_row.push(createData(element.friendlyID, element.state, secondsToHms(element.time), element.customerName,
 					(Object.entries(element.items)).toString(), objectToString(element.address, 1), element.comments, element.total))
 			});
 		}
 
-		if (fk_row.length != 0) {
+		if (fk_row.length !== 0) {
 			fk_row = searchData(fk_row)
 		}
 		setRows(fk_row);
@@ -145,9 +147,9 @@ export default function StickyHeadTable(props) {
 	};
 
 	function searchData(data) {
-		console.log(data, "filter data")
+		if( data )
 		data.filter(function (item) {
-			if (item.customerName == props.data.customer) {
+			if (item.customerName === props.data.customer) {
 				return true;
 			} else {
 				return false;

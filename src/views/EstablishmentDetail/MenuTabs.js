@@ -29,7 +29,9 @@ export default function SectionPills() {
 
 	React.useEffect(() => {
 		initGetData();
-	}, []);
+	},
+	// eslint-disable-next-line
+	[]);
 
 	function initGetData() {
 		var establishmentID = localStorage.getItem("selectedEstablishmentId")
@@ -51,8 +53,8 @@ export default function SectionPills() {
 
 	function configMenuList (data) {
 		var array = [];
-		if (data.length!=0) {
-				data.map((element, i)=>{
+		if (data.length!==0) {
+				data.forEach((element, i)=>{
 				array.push({
 					tabButton: element.title,
 					tabContent: (

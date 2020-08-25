@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-// @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-// @material-ui/icons
-// core components
 import Header from "components/Header/Header.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -12,7 +9,7 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardFooter from "components/Card/CardFooter.js";
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Link, useHistory } from "react-router-dom";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
@@ -44,46 +41,51 @@ export default function LoginPage(props) {
 		weight: '',
 		weightRange: '',
 		showPassword: false,
-	  });
+	});
 
-	setTimeout(function() {
+	React.useEffect(() => {
+		handleValidationRule();
+	}, []);
+
+	setTimeout(function () {
 		setCardAnimation("");
 	}, 700);
 
-	function handleName(e) {
+	const handleName = (e) => {
 		e.preventDefault()
 		setName(e.target.value)
 	}
-	function handlePassword(e) {
+	const handlePassword = (e) => {
 		e.preventDefault()
 		setPassword(e.target.value)
 	}
-	function submitLogin(e) {
+	const submitLogin = (e) => {
 		// console.log(state);
-			var data = JSON.stringify({"username": uname,"password": upassword});
-			var config = {
+		var data = JSON.stringify({ "username": uname, "password": upassword });
+		var config = {
 			method: 'post',
 			url: 'https://cors-anywhere.herokuapp.com/https://ontab.co.uk/v1/authenticate',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			data : data
-			};
-			const request = axios(config);
-			request
+			data: data
+		};
+		const request = axios(config);
+		request
 			.then(response => {
-				console.log(response.data.username)
 				if (response.data.token) {
 					localStorage.setItem('authority', response.data.authorities[0].authority);
 					localStorage.setItem('access_token', response.data.token);
 					localStorage.setItem('username', response.data.username);
-					if(response.data.authorities[0].authority=="CUSTOMER"){
+					if (response.data.authorities[0].authority === "CUSTOMER") {
 						history.push("main-page");
 					} else {
 						history.push("establishment-management");
 					}
 				}
-			}).catch(function (error) {
+				console.log(response)
+			})
+			.catch(function (errors) {
 				toastr.error('Check you login infomation and insert correctly', 'Login error');
 			});
 	}
@@ -95,6 +97,15 @@ export default function LoginPage(props) {
 	const handleMouseDownPassword = (event) => {
 		event.preventDefault();
 	};
+
+	const handleValidationRule = () => {
+		ValidatorForm.addValidationRule('password', (value) => {
+			if (value.length < 9) {
+				return false;
+			}
+			return true;
+		});
+	}
 
 	return (
 		<div>
@@ -120,10 +131,10 @@ export default function LoginPage(props) {
 								<CardHeader color="info" className={classes_basic.cardHeader}>
 									<h3>User Login</h3>
 								</CardHeader>
-								<CardBody style={{paddingBottom: "0"}}>
+								<CardBody style={{ paddingBottom: "0" }}>
 									<ValidatorForm
-											onSubmit={submitLogin}
-											onError={errors => console.log(errors)}
+										onSubmit={submitLogin}
+										onError={errors => console.log(errors)}
 									>
 										<GridContainer>
 											<GridItem xs={12}>
@@ -132,10 +143,10 @@ export default function LoginPage(props) {
 													onChange={handleName}
 													name="uname"
 													value={uname}
-													style={{width: "100%", marginBottom: "30px"}}
+													style={{ width: "100%", marginBottom: "30px" }}
 													validators={['required']}
 													errorMessages={['this field is required', 'Username is not valid']}
-											/>
+												/>
 											</GridItem>
 											<GridItem xs={12}>
 												<TextValidator
@@ -144,12 +155,12 @@ export default function LoginPage(props) {
 													label="Password"
 													fullWidth={true}
 													onChange={handlePassword}
-													validators={['required']}
+													validators={['password', 'required']}
 													errorMessages={['Password length should be over 8 letters', 'Password is not valid']}
 													type={values.showPassword ? 'text' : 'password'}
-													style={{width: "100%", marginBottom: "30px"}}
+													style={{ width: "100%", marginBottom: "30px" }}
 													InputProps={{
-															endAdornment: (
+														endAdornment: (
 															<InputAdornment position="end">
 																<IconButton
 																	aria-label="toggle password visibility"
@@ -159,14 +170,14 @@ export default function LoginPage(props) {
 																	{values.showPassword ? <Visibility /> : <VisibilityOff />}
 																</IconButton>
 															</InputAdornment>
-															)
+														)
 													}}
-                        						/>
+												/>
 											</GridItem>
-											
+
 										</GridContainer>
 										<CardFooter className={classes_basic.cardFooter}>
-											<Button color="info" size="lg" style={{margin:"0"}} type="submit">
+											<Button color="info" size="lg" style={{ margin: "0" }} type="submit">
 												Login
 											</Button>
 										</CardFooter>
@@ -174,14 +185,14 @@ export default function LoginPage(props) {
 								</CardBody>
 								<CardFooter className={classes_basic.cardFooter}>
 									<Link to="/forgot-password">
-										<Button simple color="info" style={{margin:"0", padding: "0", paddingBottom: "10px"}}>
+										<Button simple color="info" style={{ margin: "0", padding: "0", paddingBottom: "10px" }}>
 											Forgot your password?
 										</Button>
 									</Link>
 								</CardFooter>
 								<CardFooter className={classes_basic.cardFooter}>
 									<Link to="/user-signup">
-										<Button simple color="info" style={{margin:"0", paddingTop: "0px", paddingBottom: "20px"}}>
+										<Button simple color="info" style={{ margin: "0", paddingTop: "0px", paddingBottom: "20px" }}>
 											Don't you have an account? SignUp
 										</Button>
 									</Link>

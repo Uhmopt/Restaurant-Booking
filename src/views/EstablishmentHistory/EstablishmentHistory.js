@@ -61,7 +61,7 @@ export default function FullWidthTabs() {
   const [customer, setCustomer] = React.useState("");
   const [startDate, setStartDate] = React.useState("2020-04-04");
   const [endDate, setEndDate] = React.useState((new Date()).toISOString().substr(0, 10));
-  const [sendData, setSendData] = React.useState({startDate: "2020-04-04", endDate:(new Date()).toISOString().substr(0, 10), customer: "" });
+  const [sendData, setSendData] = React.useState({startDate: "2020-04-04", endDate:(new Date()).toISOString().substr(0, 10) });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

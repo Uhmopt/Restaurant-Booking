@@ -57,7 +57,6 @@ export default function MediaCard( props ) {
 		.then(function (response) {
 			setOrderList(response.data);
 			localStorage.setItem("orderList", JSON.stringify(response.data))
-			// searchData()
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -76,10 +75,10 @@ export default function MediaCard( props ) {
 			<GridItem sm={12} style={{ paddingTop: "30px", color: "black", textAlign: "-webkit-right"}}><h4 ><CollectionsBookmarkIcon /> <font>Click&Collect Orders: 13</font></h4></GridItem>
 				<GridItem sm={12}>
 					<GridContainer spacing={2} style={{ paddingTop: "30px" }}>
-						{orderList.length!=0?orderList.map((element, i)=>{
+						{orderList.length!==0?orderList.map((element, i)=>{
 						return (
 							<GridItem sm={6} key={i}>
-								<Card onClick={()=>handleClick(element)} style={element.state=="REQUESTED"?{fontSize: "16px", border: "1px solid #6f85ff"}:{fontSize: "16px"}}>
+								<Card onClick={()=>handleClick(element)} style={element.state==="REQUESTED"?{fontSize: "16px", border: "1px solid #6f85ff"}:{fontSize: "16px"}}>
 									<CardActionArea>
 										<CardContent spacing={5}>
 												<GridContainer >
@@ -87,20 +86,17 @@ export default function MediaCard( props ) {
 													<GridItem sm={6} md={2} style={{ padding: "5px", textAlignLast: "center", fontSize: "16px"  }}>{element.time}</GridItem>
 													<GridItem sm={6} md={3} style={{ padding: "5px", textAlignLast: "center", fontSize: "16px"  }}>{element.customerName}</GridItem>
 													{
-														([].concat(element.state)).map((child, i)=>{
+														(	// eslint-disable-next-line
+															[].concat(element.state)).map((child, i)=>{
 															switch (child) {
 																case "REQUESTED":
 																	return(<GridItem key={i} sm={6} md={3} style={request} >{element.state}</GridItem>)
-																	break;
 																case "ACCEPTED":
 																	return(<GridItem key={i} sm={6} md={3} style={accept}>{element.state}</GridItem>)
-																	break;
 																case "COMPLETED":
 																	return(<GridItem key={i} sm={6} md={3} style={complete}>{element.state}</GridItem>)
-																	break;
 																case "CANCELLED":
 																	return(<GridItem key={i} sm={6} md={3} style={cancel}>{element.state}</GridItem>)
-																	break;
 																default:
 																	break;
 															}

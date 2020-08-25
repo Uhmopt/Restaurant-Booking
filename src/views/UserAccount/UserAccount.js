@@ -22,7 +22,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import axios from 'axios';
-import { TextField, Button, Dialog, DialogActions, DialogContent, Icon, Typography, Toolbar, AppBar, Avatar } from '@material-ui/core';
+import { TextField, Button, Dialog, DialogActions, DialogContent, Icon, Typography, Toolbar, AppBar } from '@material-ui/core';
 
 const useStyles = makeStyles({
 	table: {
@@ -35,7 +35,6 @@ export default function SimpleTable() {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const [flag, setFlag] = React.useState(false);  // this is the insert or edit
-	const [checked, setChecked] = React.useState(true);
 	const [tablelist, setList] = React.useState([]);
 	// form data
 	const [password, setPassword] = React.useState("")
@@ -50,7 +49,9 @@ export default function SimpleTable() {
 
 	React.useEffect(() => {
 		initGetStaffList()
-	}, []);
+	},
+	// eslint-disable-next-line
+	[]);
 
 	function initGetStaffList() {
 
@@ -91,11 +92,11 @@ export default function SimpleTable() {
 
 	const submitRegister = () => {
 		setOpen(false);
-		if (firstname == "" || surname == "" || email == "" || username == "" || phone == "") {
+		if (firstname === "" || surname === "" || email === "" || username === "" || phone === "") {
 			toastr.warning('Plese input correctly', 'Notification.');
 			return;
 		}
-		if (password != repassword) {
+		if (password !== repassword) {
 			toastr.warning('Plese input correctly', 'Password is not matched.');
 			return;
 		}

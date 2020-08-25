@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // nodejs library that concatenates classes
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,7 +22,6 @@ import image2 from "assets/img/image4.jpg";
 import image3 from "assets/img/image3.jpg";
 import image4 from "assets/img/image1.jpg";
 import image5 from "assets/img/image4.jpg";
-import axios from "axios"
 const useStyles_com = makeStyles(styles_com);
 const useStyles_nav = makeStyles(styles_nav);
 
@@ -60,21 +59,21 @@ export default function Components(props) {
 
 		let fk_restaurantList = JSON.parse(localStorage.getItem('restaurantList'))
 		let fk_cuisines = cuisines.filter( function (element) {
-			return element.value == true;
+			return element.value === true;
 		});
 
 		let fk_diets = diets.filter( function (element) {
-			return element.value == true;
+			return element.value === true;
 		});
 
 		if (fk_restaurantList) {
-			if( fk_cuisines.length != 0 || fk_diets.length != 0 ){
+			if( fk_cuisines.length !== 0 || fk_diets.length !== 0 ){
 				fk_restaurantList = fk_restaurantList.filter( function (parent) {
 					var flag = false;
 					if (parent.cuisines) {
 						parent.cuisines.forEach((child)=> {
 							fk_cuisines.forEach((cuisine) => {
-								if( cuisine.name==child ){
+								if( cuisine.name===child ){
 									flag = true;
 								}
 							})
@@ -83,7 +82,7 @@ export default function Components(props) {
 					if (parent.diets) {
 						parent.diets.forEach((child)=> {
 							fk_diets.forEach((diet) => {
-								if( diet.name==child ){
+								if( diet.name===child ){
 									flag = true;
 								}
 							})
@@ -124,7 +123,7 @@ export default function Components(props) {
 						<GridContainer spacing={3} style={{marginTop: "40px"}} >
 							{
 								cuisines.map((element, i) => {
-									if (element.value==true) {
+									if (element.value===true) {
 										return(<Button
 											variant="contained"
 											color="default"
@@ -134,7 +133,7 @@ export default function Components(props) {
 											key={i}
 										> {element.name}
 										</Button>)
-									}
+									} else return true
 								})
 							}
 						</GridContainer>

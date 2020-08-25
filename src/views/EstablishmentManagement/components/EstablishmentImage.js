@@ -62,7 +62,6 @@ class ImageUpload extends React.Component {
 	}
 	handleUpload = () => {
 		var FormData = require('form-data');
-		var fs = require('fs');
 		var data = new FormData();
 		data.append('image', this.state.file);
 		var establishment = JSON.parse(localStorage.getItem("establishment"));
@@ -89,9 +88,11 @@ class ImageUpload extends React.Component {
 		let { imagePreviewUrl } = this.state;
 		let $imagePreview = null;
 		if (imagePreviewUrl) {
+			// eslint-disable-next-line
 			$imagePreview = <img src={imagePreviewUrl} />;
 		} else {
 			$imagePreview = (
+				// eslint-disable-next-line
 				<div className="previewText">Restaruant Image</div>
 			);
 		}

@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
@@ -14,7 +13,6 @@ import SelectBox from "./SelectBox";
 
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import { Link, useHistory } from "react-router-dom";
 import toastr from 'toastr'
 // toastr
 import 'toastr/build/toastr.min.css'
@@ -42,13 +40,7 @@ const useStyles = makeStyles((theme) => ({
 			height: theme.spacing(16),
 		},
 	},
-	formControl: {
-		margin: theme.spacing(1),
-		minWidth: 120,
-	},
-	selectEmpty: {
-		marginTop: theme.spacing(2),
-	},
+	// eslint-disable-next-line
 	root: {
 		minWidth: 275,
 	},
@@ -73,15 +65,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SimpleCard() {
-	const history = useHistory();
 	const classes = useStyles();
 
 	const [bookPcode, setBookPcode] = React.useState("");
 	const [bookDistance, setBookDistance] = React.useState("");
 	const [bookDate, setBookDate] = React.useState("");
 	const [bookCover, setBookCover] = React.useState("");
-	const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
-	const [age, setAge] = React.useState('');
 
 	React.useEffect(() => {
 		setBookPcode(localStorage.getItem("bookPcode"));
@@ -94,9 +83,9 @@ export default function SimpleCard() {
 		localStorage.setItem("bookPcode", bookPcode);
 		localStorage.setItem("bookDistance", bookDistance);
 		localStorage.setItem("bookDate", bookDate);
-		localStorage.setItem("bookCover", bookCover);
+		localStorage.setItem("bookCover", bookCover); 
 		var date = new Date(bookDate);
-		var seconds = date.getTime() / 1000;
+		var seconds = date.getTime() / 1000; 
 		var config = {
 			method: 'get',
 			url: `https://cors-anywhere.herokuapp.com/https://ontab.co.uk/v1/establishment/getEstablishmentsReservationByLocationPostcode?postcode=${bookPcode}&distance=${Number(bookDistance)}&time=${Math.ceil(seconds)}&covers=${bookCover}`,
@@ -129,9 +118,6 @@ export default function SimpleCard() {
 	function handleBookCover(e) {
 		setBookCover(e.target.value)
 	}
-
-	const bull = <span className={classes.bullet}>•</span>;
-
 	return (
 				<GridContainer justify="center">
 					<GridItem md={10} sm={12}>

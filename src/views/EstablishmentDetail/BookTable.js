@@ -25,7 +25,7 @@ export default function ResponsiveDialog() {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+  const [selectedDate, setSelectedDate] = React.useState(moment(new Date('2014-08-18T21:11:54'), "YYYY-MM-DD"));
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
