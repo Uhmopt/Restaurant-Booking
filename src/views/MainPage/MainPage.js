@@ -14,6 +14,7 @@ import HeaderLinks from "components/Header/HeaderLinks.js";
 import SectionNavbars from "./Sections/SectionNavbars.js";
 import SectionTabs from "./Sections/SectionTabs.js";
 import SectionExamples from "./Sections/SectionExamples.js";
+import { useHistory } from "react-router-dom";
 
 import BackgroundSlider from 'react-background-slider'
 import image1 from "assets/img/image1.jpg";
@@ -26,8 +27,14 @@ import styles from "assets/jss/material-kit-react/views/landingPage.js";
 const useStyles = makeStyles(styles);
 
 export default function Components(props) {
+	const history = useHistory();
 	const classes = useStyles();
 	const { ...rest } = props;
+	React.useEffect(() => {
+		if (localStorage.getItem("authority")=="MANAGER"||localStorage.getItem("authority")=="STAFF") {
+			history.push("establishment-management");
+		}
+	}, []);
 	return (
 		<div style={{ background: "linear-gradient(0deg, #673AB7 0%, rgb(255, 255, 255) 54%, rgb(255, 255, 255) 100%)" }}>
 			<Header

@@ -26,7 +26,7 @@ export default function Components(props) {
 	const[authority] = React.useState(localStorage.getItem("authority"));
 
 	React.useEffect(() => {
-		if( localStorage.getItem("authority") !== "CUSTOMER" ){
+		if( localStorage.getItem("authority") === "CUSTOMER" ){
 			history.push("main-page");
 		}
 		getEstablishment()
