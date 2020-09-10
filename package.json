@@ -43,6 +43,7 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "react-select-material-ui": "^6.6.3",
+    "react-skeleton-loading": "^1.0.0",
     "react-slick": "0.26.1",
     "react-slideshow-image": "^2.0.2",
     "react-swipeable-views": "0.13.9",

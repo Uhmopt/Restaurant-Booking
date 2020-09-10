@@ -57,7 +57,6 @@ var hist = createBrowserHistory();
         <Route path="/main-page" component={MainPage} />
         <Route path="/order-reservation-manage" component={OrderReservation} />
         <Route path="/history" component={History} />
-
         <Route path="/establishment-detail" component={EstablishmentDetail} />
         <Route path="/establishment-management" component={EstablishmentManagement} />
         <Route path="/establishment-submit" component={EstablishmentSubmit} />

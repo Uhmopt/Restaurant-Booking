@@ -7,6 +7,7 @@ import Button from "components/CustomButtons/Button.js";
 import SearchIcon from '@material-ui/icons/Search';
 import CustomInput from "components/CustomInput/CustomInput.js";
 // core components
+import TextField from '@material-ui/core/TextField';
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
@@ -14,8 +15,9 @@ import orange from "@material-ui/core/colors/orange";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import SelectBox from "./SelectBox";
+import SelectTime from "./SelecetTime";
 import MomentUtils from '@date-io/moment';
-import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import styles from "assets/jss/material-kit-react/views/componentsSections/tabsStyle.js";
 // toastr
 import toastr from 'toastr'
@@ -37,6 +39,8 @@ function CssThemeExample() {
 	const [bookPcode, setBookPcode] = useState("");
 	const [bookDistance, setBookDistance] = useState(5);
 	const [bookDate, setBookDate] = useState("");
+	const [sendDate, setSendDate] = useState("");
+	const [bookTime, setBookTime] = useState("12:00");
 	const [bookCover, setBookCover] = useState("");
 
 	useEffect(() => {
@@ -63,7 +67,7 @@ function CssThemeExample() {
 			})
 			.catch(function (error) {
 			console.log(error);
-				toastr.error('Check you postcode and distance', error);
+				toastr.error("Sorry, we couldn't find any results that matched your search", "Try going to find more restaurants.");
 			});
 	}
 
@@ -73,23 +77,31 @@ function CssThemeExample() {
 			toastr.warning("Please input Post Code and People first", "Notification");
 			return false;
 		}
+		setSendDate(bookDate + "T" + bookTime)
 		localStorage.setItem("bookPcode", bookPcode);
 		localStorage.setItem("bookDistance", bookDistance);
-		localStorage.setItem("bookDate", bookDate);
+		localStorage.setItem("bookDate", sendDate);
 		localStorage.setItem("bookCover", bookCover);
-		var date = new Date(bookDate);
+		
+
+		var date = new Date(sendDate);
 		var seconds = date.getTime() / 1000;
+		console.log(date, seconds);
 		var config = {
 			method: 'get',
 			url: `https://cors-anywhere.herokuapp.com/https://ontab.co.uk/v1/establishment/getEstablishmentsReservationByLocationPostcode?postcode=${bookPcode}&distance=${bookDistance}&time=${Math.ceil(seconds)}&covers=${bookCover}`, //this is the complete url			
 			headers: { }
 		};
-
 		axios(config)
 		.then(function (response) {
 			console.log(response.data)
-			localStorage.setItem('bookList', JSON.stringify(Object.entries(response.data)));
-			history.push('search-table')
+			
+			if (response.data.length===0) {
+				toastr.error("No establishments were found to match your reservation requirements", "Try going to find more restaurants.");
+			} else {
+				localStorage.setItem('bookList', JSON.stringify(Object.entries(response.data)));
+				history.push('search-table')
+			}
 		})
 		.catch(function (error) {
 			toastr.error("Sorry, we couldn't find any results that matched your search", "Try going to find more restaurants.");
@@ -110,11 +122,19 @@ function CssThemeExample() {
 	}
 
 	function handleBookDate(e) {
-		setBookDate(e._d)
+		setSendDate(e.toISOString().substr(0, 10) + "T" + bookTime)
+		setBookDate(e.toISOString().substr(0, 10))
+	}
+
+	function handleBookTime(e) {
+		setBookTime(e)
+		setSendDate( bookDate + "T" + e )
 	}
 
 	function handleBookCover(e) {
-		setBookCover(e.target.value)
+		if(e.target.value >= 0) {
+			setBookCover(e.target.value)
+		}
 	}
 
 	return (
@@ -159,7 +179,7 @@ function CssThemeExample() {
 										tabName: "Book a Table",
 										tabContent: (
 											<GridContainer>
-												<GridItem xs={12} md={3}>
+												<GridItem xs={12} md={2}>
 													<CustomInput
 														id="postcode"
 														error
@@ -173,39 +193,44 @@ function CssThemeExample() {
 														}}
 													/>
 												</GridItem>
-												<GridItem sm={12} md={3} style={{marginTop: "2px"}}>
+												<GridItem sm={12} md={2} style={{marginTop: "2px"}}>
 
 													<MuiPickersUtilsProvider utils={MomentUtils} style={{ width: "100%" }}>
 														<ThemeProvider theme={defaultMaterialTheme}>
-															<DateTimePicker
+															<KeyboardDatePicker
+																disableToolbar
 																variant="inline"
-																label="Select Data & Time"
+																format="MM/DD/yyyy"
+																margin="normal"
+																id="date"
+																label="Date"
 																value={bookDate}
-																style={{marginTop: "10px"}}
+																style={{ width: "100%", marginTop: "10px" }}
 																onChange={(event) =>
 																	handleBookDate(event)
 																}
-															/>
+																KeyboardButtonProps={{
+																	'aria-label': 'change date',
+																}}
+															/>	
 														</ThemeProvider>
 													</MuiPickersUtilsProvider>
+												</GridItem>
 
+												<GridItem sm={12} md={2} style={{paddingTop: "12px"}}>
+													<SelectTime value={bookTime} onClick={handleBookTime}/>
 												</GridItem>
 
 												<GridItem sm={12} md={2}>
 													<SelectBox value={distance} onClick={handledistance}/>
 												</GridItem>
 
-												<GridItem sm={12} md={2}>
-													<CustomInput
-														error
-														inputProps={{
-															placeholder: "People",
-															onChange: (event) => handleBookCover(event),
-														}}
+												<GridItem sm={12} md={2} style={{ marginTop: "12px" }}>
+													<TextField
+														label="people"
+														onChange = {(event) => handleBookCover(event)}
+														type="number"
 														value={bookCover}
-														formControlProps={{
-															fullWidth: true
-														}}
 													/>
 												</GridItem>
 												

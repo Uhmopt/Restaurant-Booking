@@ -40,7 +40,6 @@ export default function SectionPills() {
 			url: `https://cors-anywhere.herokuapp.com/http://ontab.co.uk/v1/menu/getByEstablishment/${establishmentID}`,
 			headers: { }
 		};
-
 		axios(config)
 		.then(function (response) {
 			configMenuList (response.data);
@@ -58,7 +57,7 @@ export default function SectionPills() {
 				array.push({
 					tabButton: element.title,
 					tabContent: (
-						<MenuDetail key={i} data={ element } count={handleCount} style={{ overflowY: "hidden" }}/>
+						<MenuDetail key={i} data={ element } title={ element.title } count={handleCount} style={{ overflowY: "hidden" }}/>
 					)
 				})
 			})
@@ -78,8 +77,12 @@ export default function SectionPills() {
 		setCount(JSON.parse(localStorage.getItem("basket")).length)
 	}
 
+	function handleDelete () {
+		setCount(JSON.parse(localStorage.getItem("basket")).length)
+	}
+	
 	return (
-		<div className={classes.section} style={{paddingTop: "0px"}}>
+		<div className={classes.section} style={{paddingTop: "0px", width: "100%"}}>
 			<div className={classes.container}>
 				<div id="navigation-pills" style={{ position: "relative" }}>
 					
@@ -130,7 +133,7 @@ export default function SectionPills() {
 						style={{border:" 1px solid #337ab7",borderRadius: "4px", padding: "0px 20px 30px 20px" }}
 					/>
 				</div>
-				<OrderingDialog openState={open} onClose={handleClose}/>
+				<OrderingDialog openState={open} onDelete={handleDelete} onClose={handleClose}/>
 			</div>
 
 		</div>

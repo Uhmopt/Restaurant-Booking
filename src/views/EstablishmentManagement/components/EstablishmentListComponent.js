@@ -143,9 +143,10 @@ export default function RecipeReviewCard(props) {
           title={props.data.name}
           subheader={"Post Code:" + props.data.address.postcode + " Country Code:" + props.data.address.countryCode}
         />
+        {/* eslint-disable-next-line */}
         <CardMedia
           className={classes.media}
-          image="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iEKgigI_JgX8/v2/-1x-1.jpg"
+          image={props.data.logoURL&&props.data.logoURL.replace("<sizeHere>", "desktop")}
           title="Paella dish"
         />
         <CardContent style={{paddingBottom: "0"}}>

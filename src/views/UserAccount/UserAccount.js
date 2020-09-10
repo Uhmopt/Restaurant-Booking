@@ -12,7 +12,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Paper from '@material-ui/core/Paper';
 import AddIcon from '@material-ui/icons/Add';
-import Checkbox from '@material-ui/core/Checkbox';
+// import Checkbox from '@material-ui/core/Checkbox';
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import { Link } from "react-router-dom";
@@ -131,7 +131,6 @@ export default function SimpleTable() {
 				});
 		}
 
-		
 	}
 
 	const handleInsert = (e) => {
@@ -148,26 +147,26 @@ export default function SimpleTable() {
 		setOpen(false);
 	};
 
-	const handleCheck = (name) => {
-		var token = localStorage.getItem("access_token");
-		var config = {
-			method: 'put',
-			url: `https://cors-anywhere.herokuapp.com/https://ontab.co.uk/v1/staffList/disableStaffUser/${localStorage.getItem("establishmentId")}?username=${name}`,
-			headers: {
-				"Authorization": `Bearer ${token}`,
-				'Content-Type': 'application/json'
-			},
-		};
+	// const handleCheck = (name) => {
+	// 	var token = localStorage.getItem("access_token");
+	// 	var config = {
+	// 		method: 'put',
+	// 		url: `https://cors-anywhere.herokuapp.com/https://ontab.co.uk/v1/staffList/disableStaffUser/${localStorage.getItem("establishmentId")}?username=${name}`,
+	// 		headers: {
+	// 			"Authorization": `Bearer ${token}`,
+	// 			'Content-Type': 'application/json'
+	// 		},
+	// 	};
 
-		axios(config)
-			.then(function (response) {
-				console.log(JSON.stringify(response.data));
-				initGetStaffList();
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-	}
+	// 	axios(config)
+	// 		.then(function (response) {
+	// 			console.log(JSON.stringify(response.data));
+	// 			initGetStaffList();
+	// 		})
+	// 		.catch(function (error) {
+	// 			console.log(error);
+	// 		});
+	// }
 
 	const handleClick = (i) => {
 		setEmail(tablelist[i].email)
@@ -230,7 +229,7 @@ export default function SimpleTable() {
 											<TableCell align="center">UserName</TableCell>
 											<TableCell align="center">Phone</TableCell>
 											<TableCell align="center">Role</TableCell>
-											<TableCell align="right">State</TableCell>
+											{/* <TableCell align="right">State</TableCell> */}
 										</TableRow>
 									</TableHead>
 									<TableBody>
@@ -243,15 +242,7 @@ export default function SimpleTable() {
 												<TableCell align="center">{row.email}</TableCell>
 												<TableCell align="center">{row.username}</TableCell>
 												<TableCell align="center">{row.phone}</TableCell>
-												<TableCell align="center">{row.role}</TableCell>
-												<TableCell align="right">
-													<Checkbox
-														checked={row.state}
-														color="primary"
-														inputProps={{ 'aria-label': 'secondary checkbox' }}
-														onChange={(e) => handleCheck(row.username)}
-													/>
-												</TableCell>
+												<TableCell align="right">{row.role}</TableCell>
 											</TableRow>
 										))}
 									</TableBody>

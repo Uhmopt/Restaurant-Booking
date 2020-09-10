@@ -287,7 +287,7 @@ export default function LoginPage() {
 			setPhone(establishment.telephone);
 			setTimeZone(establishment.timezone);
 			setEmail(establishment.email);
-			setImage(establishment.logoURL);
+			setImage(establishment.logoURL!==''?establishment.logoURL.replace("<sizeHere>", "desktop"):"");
 			setTable(establishment.reservationConfiguration.tables);
 			setSpecial(establishment.operatingHours.specialDays);
 			setNormal(establishment.operatingHours.normalDays);
@@ -361,7 +361,6 @@ export default function LoginPage() {
 											errorMessages={['this field is required', 'Username is not valid']}
 										/>
 									</GridItem>
-
 									<GridItem sm={4} md={2}>
 										<FormControlLabel
 											control={
@@ -579,7 +578,7 @@ export default function LoginPage() {
 													style={{ width: "100%", marginTop: "20px"}}
 													onClick={handlePrint}
 												>
-													Print
+													Download
 												</BackButton>:""
 											}
 											

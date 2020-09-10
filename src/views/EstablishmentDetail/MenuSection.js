@@ -21,7 +21,8 @@ export default function Components(props) {
           fontSize: "24px",
           textAlignLast: "center",
           borderBottom: "3px solid #337ab7",
-          marginBottom: "12px"
+          marginBottom: "12px",
+          marginTop: "24px"
         }}>
           {section.section_title}
         </GridItem>
@@ -31,21 +32,21 @@ export default function Components(props) {
           wordBreak: "break-all",
           marginLeft: "12px",
           marginRight: "12px",
-          marginBottom: "12px"
+          marginBottom: "12px",
+          textAlign: "-webkit-left"
           }}>
           {section.section_desc}
         </GridItem>
       </GridContainer>
-      <GridContainer  style={{ overflow: "hidden" }}> 
+      <GridContainer  style={{ overflow: "hidden", marginBottom: "12px" }}> 
         {
           section.section_contents!==undefined?
           section.section_contents.map((element, i)=>{
             return (
               <GridItem md={12} sm={12} key={i}>
-                <MenuGallery data={ element } count={handleCount}/>
+                <MenuGallery data={ element } title={ props.title } count={handleCount}/>
               </GridItem>
             )
-            
           }):''
         }
       </GridContainer>

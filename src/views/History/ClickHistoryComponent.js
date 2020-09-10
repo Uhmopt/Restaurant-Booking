@@ -81,7 +81,7 @@ export default function StickyHeadTable(props) {
 	function initGetData() {
 		var config = {
 			method: 'get',
-			url: `https://cors-anywhere.herokuapp.com/https://ontab.co.uk/v1/history/order/user/${localStorage.getItem("establishmentId")}`,
+			url: `https://cors-anywhere.herokuapp.com/https://ontab.co.uk/v1/history/order/user`,
 			headers: {
 				"Authorization": `Bearer ${localStorage.getItem("access_token")}`,
 				'Content-Type': 'application/json'

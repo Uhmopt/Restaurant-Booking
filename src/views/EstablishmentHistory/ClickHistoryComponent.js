@@ -16,7 +16,6 @@ const columns = [
 	{ id: 'time', label: 'Time' },
 	{ id: 'customerId', label: 'Customer' },
 	{ id: 'items', label: 'Items' },
-	{ id: 'address', label: 'Address' },
 	{ id: 'comments', label: 'Comments' },
 	{ id: 'total', label: 'Total(£)' }
 ];
@@ -65,21 +64,21 @@ const useStyles = makeStyles({
 	},
 });
 
-function objectToString(obj, v) {
-	var string = "";
-	if (v === 0) {
-		for (const key in obj) {
-			// eslint-disable-next-line
-			string = string + key + ":" + " " + obj[key] + ", ";
-		}
-	} else {
-		for (const key in obj) {
-			string = string + obj[key] + ", ";
-		}
-	}
-	string = string.substr(0, string.length - 2);
-	return string
-}
+// function objectToString(obj, v) {
+// 	var string = "";
+// 	if (v === 0) {
+// 		for (const key in obj) {
+// 			// eslint-disable-next-line
+// 			string = string + key + ":" + " " + obj[key] + ", ";
+// 		}
+// 	} else {
+// 		for (const key in obj) {
+// 			string = string + obj[key] + ", ";
+// 		}
+// 	}
+// 	string = string.substr(0, string.length - 2);
+// 	return string
+// }
 
 
 export default function StickyHeadTable(props) {
@@ -123,7 +122,7 @@ export default function StickyHeadTable(props) {
 		if (data !== null) {
 			data.orders.forEach((element, i) => {
 				fk_row.push(createData(element.friendlyID, element.state, secondsToHms(element.time), element.customerName,
-					(Object.entries(element.items)).toString(), objectToString(element.address, 1), element.comments, element.total))
+					(Object.entries(element.items)).toString(), element.comments, element.total))
 			});
 		}
 
@@ -133,8 +132,8 @@ export default function StickyHeadTable(props) {
 		setRows(fk_row);
 	}
 
-	function createData(orderId, state, time, customerId, items, address, comments, total) {
-		return { orderId, state, time, customerId, items, address, comments,  total };
+	function createData(orderId, state, time, customerId, items, comments, total) {
+		return { orderId, state, time, customerId, items, comments,  total };
 	}
 
 	const handleChangePage = (event, newPage) => {

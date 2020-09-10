@@ -84,7 +84,7 @@ export default function SimpleCard() {
 					<GridItem md={8} sm={12}>
 						<Card className={classes.root} style={{paddingTop: "220px",paddingBottom: "100px",boxShadow:" 0 0 0", background:"transparent"}}>
 
-							<h2 style={{color: "white"}}>Search the Establishment</h2>
+							<h2 style={{color: "white"}}>Click and Collect Results</h2>
 							<CardContent style={{background: "#fff", margin:"10px 5px 10px", borderRadius: "6px", paddingTop: "0px"}}>
 								<GridContainer>
 									<GridItem sm={12} md={4}>

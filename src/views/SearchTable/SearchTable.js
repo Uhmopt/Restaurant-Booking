@@ -39,7 +39,6 @@ export default function Components(props) {
 
 	function initGetEstablishments () {
 		setRestaurant(JSON.parse(localStorage.getItem('bookList')));
-		console.log(JSON.parse(localStorage.getItem('bookList')))
 	}
 
 	function handleFilter (e) {

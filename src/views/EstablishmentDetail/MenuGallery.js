@@ -40,86 +40,96 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MediaControlCard(props) {
 	const [content, setContent] = React.useState({})
-	const[ open, setOpen ] = React.useState(false)
+	const [open, setOpen] = React.useState(false)
 	const classes = useStyles();
 
 	React.useEffect(() => {
 		setContent(props.data);
 	}, [props.data]);
 
-	function handleDialog () {
+	function handleDialog() {
 		setOpen(true);
 	}
-	function handleCount () {
+	function handleCount() {
 		props.count()
-	  }
-	function closeDialog () {
-		setOpen(false);	
+	}
+	function closeDialog() {
+		setOpen(false);
 	}
 
 	return (
 		<div>
-		<Card className={classes.root} onClick={handleDialog}>
-			<div className={classes.details} style={{width: "70%"}}>
-				<CardContent className={classes.content}>
-					<Typography component="h6" variant="h6">
-						{content.item_title}
-					</Typography>
-					<Typography variant="subtitle1" color="textSecondary" style={{fontSize: "14px"}}>
-						{content.item_desc}
-					</Typography>
-					<ul style={{listStyleType: "none", margin: "0", padding: "0"}}>
-						<li style={{float: "left"}}>
+			<Card className={classes.root} onClick={handleDialog} style={{ marginTop: "9px" }}>
+				<div className={classes.details} style={{ width: "70%", textAlign: "left"}}>
+					<CardContent className={classes.content}>
 						<Typography component="h6" variant="h6">
-							{content.item_price}£
+							{content.item_title}
 						</Typography>
-					</li>
-						{
-							content.gluten_free?
-							<li style={{float: "right", paddingLeft: "6px"}}>
-								<Tooltip title="Gluten Free" placement="top" arrow>
-									{/* eslint-disable-next-line */}
-									<img src={gluten_free}  width="30"/>
-								</Tooltip>
-							</li>:""
-						}
-												{
-							content.vegetarian?
-							<li style={{float: "right", paddingLeft: "6px"}}>
-								<Tooltip title="Vegetarian" placement="top" arrow>
-									{/* eslint-disable-next-line */}
-									<img src={vegetarian}  width="30"/>
-								</Tooltip>
-							</li>:""
-						}
-												{
-							content.locally_sourced?
-							<li style={{float: "right", paddingLeft: "6px"}}>
-								<Tooltip title="Locally Sourced" placement="top" arrow>
-									{/* eslint-disable-next-line */}
-									<img src={locally_sourced}  width="30"/>
-								</Tooltip>
-							</li>:""
-						}
-						{
-							content.organic?
-							<li style={{float: "right", paddingLeft: "6px"}}>
-								<Tooltip title="Organic" placement="top" arrow>
-									{/* eslint-disable-next-line */}
-									<img src={organic}  width="30"/>
-								</Tooltip></li>:""
-						}
-					</ul>
-				</CardContent>
-			</div>
-			<CardMedia
-				className={classes.cover}
-				image={image1}
-				style={{width: "30%"}}
-				title="Live from space album cover"
-			/>
-		</Card>
-		<AddDialog childOpen={open} data={content} closeDig={closeDialog} count={handleCount}/>
+						<Typography variant="subtitle1" color="textSecondary" style={{ fontSize: "14px" }}>
+							{content.item_desc}
+						</Typography>
+						<ul style={{ listStyleType: "none", margin: "0", padding: "0" }}>
+							<li style={{ float: "left" }}>
+								<Typography component="h6" variant="h6">
+									Price:&nbsp;&nbsp;{content.item_price}£
+								</Typography>
+							</li>
+							{
+								content.gluten_free ?
+									<li style={{ float: "right", paddingLeft: "6px" }}>
+										<Tooltip title="Gluten Free" placement="top" arrow>
+											{/* eslint-disable-next-line */}
+											<img src={gluten_free} width="30" alt="" />
+										</Tooltip>
+									</li> : ""
+							}
+							{
+								content.vegetarian ?
+									<li style={{ float: "right", paddingLeft: "6px" }}>
+										<Tooltip title="Vegetarian" placement="top" arrow>
+											{/* eslint-disable-next-line */}
+											<img src={vegetarian} width="30" alt="" />
+										</Tooltip>
+									</li> : ""
+							}
+							{
+								content.locally_sourced ?
+									<li style={{ float: "right", paddingLeft: "6px" }}>
+										<Tooltip title="Locally Sourced" placement="top" arrow>
+											{/* eslint-disable-next-line */}
+											<img src={locally_sourced} width="30" alt="" />
+										</Tooltip>
+									</li> : ""
+							}
+							{
+								content.organic ?
+									<li style={{ float: "right", paddingLeft: "6px" }}>
+										<Tooltip title="Organic" placement="top" arrow>
+											{/* eslint-disable-next-line */}
+											<img src={organic} width="30" alt="" />
+										</Tooltip></li> : ""
+							}
+						</ul>
+					</CardContent>
+				</div>
+				{
+					!!content && !!content.photoURL?
+					<CardMedia
+						className={classes.cover}
+						image={content.photoURL}
+						style={{ width: "30%" }}
+						title="Live from space album cover"
+					/>
+					:
+					<CardMedia
+						className={classes.cover}
+						image={image1}
+						style={{ width: "30%" }}
+						title="Live from space album cover"
+					/>
+				}
+			</Card>
+			<AddDialog childOpen={open} data={content} title={props.title} closeDig={closeDialog} count={handleCount} />
 		</div>
 	);
 }

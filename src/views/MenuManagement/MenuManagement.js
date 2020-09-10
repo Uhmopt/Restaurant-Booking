@@ -30,6 +30,7 @@ import 'toastr/build/toastr.min.css'
 import { Link } from "react-router-dom";
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import BackButton from '@material-ui/core/Button';
+
 // accordion
 import {
 	Accordion,
@@ -78,6 +79,9 @@ export default function LoginPage(props) {
 	const [allergyAdvice, setAllergyAdvice] = React.useState("");
 
 	React.useEffect(() => {
+		if (!localStorage.getItem('authority')&&localStorage.getItem('authority')!=="MANAGER") {
+			history.push("main-page")
+		}
 		var flag = localStorage.getItem('menuFlag');
 		if (flag === "false") {
 			let fk_menu = JSON.parse(localStorage.getItem('selectedMenu'));
@@ -96,7 +100,9 @@ export default function LoginPage(props) {
 				"sections": [],
 			})
 		}
-	}, []);
+	},
+	// eslint-disable-next-line
+	[]);
 
 	const handleDeleteItemClose = () => {
 		setOpenDeleteItem(false);
@@ -199,7 +205,6 @@ export default function LoginPage(props) {
 					"id": JSON.parse(localStorage.getItem("selectedMenu")).id
 				}
 			};
-			console.log(config.data)
 			axios(config)
 				.then(function (response) {
 					history.push("menu-list")
@@ -335,7 +340,7 @@ export default function LoginPage(props) {
 											{menus.sections ?
 												menus.sections.map((parent, i) => {
 													return (
-														<AccordionItem>
+														<AccordionItem key={i}>
 															<AccordionItemHeading>
 																<AccordionItemButton>
 																	<div className="menu-section-header">

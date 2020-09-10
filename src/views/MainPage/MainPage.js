@@ -31,10 +31,12 @@ export default function Components(props) {
 	const classes = useStyles();
 	const { ...rest } = props;
 	React.useEffect(() => {
-		if (localStorage.getItem("authority")=="MANAGER"||localStorage.getItem("authority")=="STAFF") {
+		if (localStorage.getItem("authority")==="MANAGER"||localStorage.getItem("authority")==="STAFF") {
 			history.push("establishment-management");
 		}
-	}, []);
+	},
+	// eslint-disable-next-line
+	[]);
 	return (
 		<div style={{ background: "linear-gradient(0deg, #673AB7 0%, rgb(255, 255, 255) 54%, rgb(255, 255, 255) 100%)" }}>
 			<Header

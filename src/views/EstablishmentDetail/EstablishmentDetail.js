@@ -17,11 +17,13 @@ import KitchenIcon from '@material-ui/icons/Kitchen';
 import Button from '@material-ui/core/Button';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MailIcon from '@material-ui/icons/Mail';
+import Switch from '@material-ui/core/Switch';
 
 // sections for this page
 import HeaderLinks from "components/Header/HeaderLinks.js";
 import styles from "assets/jss/material-kit-react/views/components.js";
 import axios from "axios"
+// import Skeleton from "react-skeleton-loading";
 
 import './establish.css'
 
@@ -50,12 +52,12 @@ export default function Components(props) {
 		};
 
 		axios(config)
-			.then(function (response) {
+			.then((response) => {
 				localStorage.setItem("orderAddress", response.data.address);
 				setEstablishment(response.data);
 				getTodayOpenClose(response.data);
 			})
-			.catch(function (error) {
+			.catch((error) => {
 			});
 	}
 
@@ -176,28 +178,13 @@ export default function Components(props) {
 						establishmentDetail.reservationConfiguration !== undefined ?
 							<GridItem md={4}>
 								<GridContainer>
-									<GridItem sm={12} style={{padding: "0px", marginBottom: "24px", marginTop: "32px", border: "1px solid #337ab7", borderRadius: "6px"}}>
-										<ImageGallery url={establishmentDetail.logoURL} />
+									<GridItem sm={12} style={{padding: "0px", marginBottom: "24px", marginTop: "32px", borderRadius: "6px"}}>
+										{
+											establishmentDetail.logoURL&&<ImageGallery url={establishmentDetail.logoURL&&establishmentDetail.logoURL.replace("<sizeHere>", "desktop")} />
+										}
 									</GridItem>
 								</GridContainer>
 								<GridContainer spacing={3}>
-									<GridItem sm={12}>
-										<div style={{ padding: "15px", border: "1px solid rgb(51 122 183)", borderRadius: "5px" }}>
-											<h5 style={{ fontWeight: "500" }}>
-												Duration:
-										</h5>
-										<h5 style={{ fontWeight: "400" }}>
-											Mon: {establishmentDetail.reservationConfiguration.monDuration}min,
-											Tue: {establishmentDetail.reservationConfiguration.tuesDuration}min,
-											Wed: {establishmentDetail.reservationConfiguration.wedDuration}min,
-											Thu: {establishmentDetail.reservationConfiguration.wedDuration}min,
-											Thurs: {establishmentDetail.reservationConfiguration.thursDuration}min,
-											Fri: {establishmentDetail.reservationConfiguration.friDuration}min,
-											Sat: {establishmentDetail.reservationConfiguration.satDuration}min,
-											Sun: {establishmentDetail.reservationConfiguration.sunDuration}min
-										</h5>
-										</div>
-									</GridItem>
 									<GridItem sm={12}>
 										<div style={{ padding: "15px", border: "1px solid rgb(51 122 183)", borderRadius: "5px" }}>
 											<h5 style={{ fontWeight: "500" }}>
@@ -271,7 +258,7 @@ export default function Components(props) {
 																)
 															})
 														}
-														<h5 style={{ fontWeight: "400", borderBottom: "1px solid #cfcfcf", lineHeight: "30px", width: "100%" }}> Nomal:<br />
+														<h5 style={{ fontWeight: "400", borderBottom: "1px solid #cfcfcf", lineHeight: "30px", width: "100%" }}> Normal:<br />
 														</h5>
 														{
 															Object.entries(establishmentDetail.operatingHours.normalDays).map((parent, i) => {
@@ -307,39 +294,62 @@ export default function Components(props) {
 
 											{
 												!btnFlag ?
-													<Button
-														variant="outlined"
-														color="primary"
-														className={classes.button}
-														startIcon={<ExpandMoreIcon />}
-														onClick={() => setBtnFlag(true)}
-														style={{ width: "100%" }}>
-														More Info...
-											</Button> :
-													<Button
-														variant="outlined"
-														color="primary"
-														className={classes.button}
-														startIcon={<ExpandLessIcon />}
-														onClick={() => setBtnFlag(false)}
-														style={{ width: "100%" }}>
-														Back
-											</Button>
+												<Button
+													variant="outlined"
+													color="primary"
+													className={classes.button}
+													startIcon={<ExpandMoreIcon />}
+													onClick={() => setBtnFlag(true)}
+													style={{ width: "100%" }}>
+													More Info...
+												</Button> :
+												<Button
+													variant="outlined"
+													color="primary"
+													className={classes.button}
+													startIcon={<ExpandLessIcon />}
+													onClick={() => setBtnFlag(false)}
+													style={{ width: "100%" }}>
+													Back
+												</Button>
 											}
 
 										</div>
 									</GridItem>
+									{console.log(establishmentDetail)}
 									<GridItem sm={12}>
 										<div style={{ padding: "15px", border: "1px solid rgb(51 122 183)", borderRadius: "5px" }}>
-											<h5 style={{ alignItem: "center", display: "flex", fontWeight: "400", paddingBottom: "8px", borderBottom: "1px solid #cfcfcf" }}>
-												<EmojiFoodBeverageIcon style={establishmentDetail.clickCollectAvailable ? { color: "#337ab7" } : {}} />Click and collect: {establishmentDetail.clickCollectAvailable ? "Able" : "Disable"}
-											</h5>
-											<h5 style={{ alignItem: "center", display: "flex", fontWeight: "400", paddingBottom: "8px", borderBottom: "1px solid #cfcfcf" }}>
-												<FastfoodIcon style={establishmentDetail.tableOrderingAvailable ? { color: "#337ab7" } : {}} />Table ordering: {establishmentDetail.tableOrderingAvailable ? "Able" : "Disable"}
-											</h5>
-											<h5 style={{ alignItem: "center", display: "flex", fontWeight: "400", paddingBottom: "8px" }}>
-												<KitchenIcon style={establishmentDetail.reservationAvailable ? { color: "#337ab7" } : {}} />Reservations: {establishmentDetail.reservationAvailable ? "Able" : "Disable"}
-											</h5>
+											<div style={{ alignItems: "center", display: "flex", fontWeight: "400", paddingBottom: "8px", borderBottom: "1px solid #cfcfcf" }}>
+												<GridItem style={{ display: "flex" }} sm={8}><EmojiFoodBeverageIcon style={establishmentDetail.takeawayAvailable ? { color: "#337ab7" } : {}} />Click and collect:</GridItem>
+												<GridItem style={{ float: "right" }} sm={4}>
+												<Switch
+													checked={establishmentDetail.takeawayAvailable}
+													color="primary"
+												/>
+												</GridItem>
+											</div>
+											<div style={{ alignItems: "center", display: "flex", fontWeight: "400", paddingBottom: "8px", borderBottom: "1px solid #cfcfcf" }}>
+												<GridItem style={{ display: "flex" }} sm={8}>
+												<FastfoodIcon style={establishmentDetail.tableOrderingAvailable ? { color: "#337ab7" } : {}} />Table ordering:
+												</GridItem>
+												<GridItem style={{ float: "right" }} sm={4}>
+												<Switch
+													checked={establishmentDetail.tableOrderingAvailable}
+													color="primary"
+												/>
+												</GridItem>
+											</div>
+											<div style={{ alignItems: "center", display: "flex", fontWeight: "400", paddingBottom: "8px" }}>
+												<GridItem style={{ display: "flex" }} sm={8}>
+													<KitchenIcon style={establishmentDetail.reservationAvailable ? { color: "#337ab7" } : {}} />Reservations:
+												</GridItem>
+												<GridItem style={{ float: "right" }} sm={4}>
+													<Switch
+														checked={establishmentDetail.reservationAvailable}
+														color="primary"
+													/>
+												</GridItem>
+											</div>
 										</div>
 									</GridItem>
 								</GridContainer>

@@ -8,10 +8,18 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import image1 from 'assets/img/upload-button-image.png';
 import axios from 'axios';
 
+// toastr
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
+
+
 class ImageUpload extends React.Component {
+
 	constructor(props) {
 		super(props);
-		this.state = { file: "", imagePreviewUrl: "" };
+		this.state = { file: "", imagePreviewUrl: this.props.url && this.props.url !== "" ? this.props.url.replace("<sizeHere>", "desktop") : this.props.url };
+		this.handleDelete = this.handleDelete.bind(this);
+		this._handleImageChange = this._handleImageChange.bind(this);
 	}
 
 	_handleImageChange(e) {
@@ -19,7 +27,6 @@ class ImageUpload extends React.Component {
 
 		let reader = new FileReader();
 		let file = e.target.files[0];
-		console.log(file)
 		reader.onloadend = () => {
 			this.setState({
 				file: file,
@@ -28,48 +35,47 @@ class ImageUpload extends React.Component {
 		};
 
 		reader.readAsDataURL(file);
-		this.handleInsert();
-	}
 
-	handleDelete() {
-		this.setState({ file: "", imagePreviewUrl: "" });
-	}
-
-	handleInsert() {
 		var selectedMenu = JSON.parse(localStorage.getItem("selectedMenu"));
 		var FormData = require('form-data');
 		var data = new FormData();
-		data.append('image', this.state.file);
+		data.append('image', file);
 		var config = {
 			method: 'post',
-			url: `https://ontab.co.uk/v1/menu/uploadPhoto/${selectedMenu.id}/${selectedMenu.sections[this.props.data.i].section_title}/${selectedMenu.sections[this.props.data.i].section_contents[this.props.data.j].item_title}`,
+			url: `https://cors-anywhere.herokuapp.com/https://ontab.co.uk/v1/menu/uploadPhoto/${selectedMenu.id}/${selectedMenu.sections[this.props.data.i].section_title}/${selectedMenu.sections[this.props.data.i].section_contents[this.props.data.j].item_title}`,
 			headers: {
 				"Authorization": `Bearer ${localStorage.getItem("access_token")}`,
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/jso '
 			},
 			data: data
 		};
 
-		console.log(config.url);
-
 		axios(config)
-			.then(function (response) {
-
+			.then((response) => {
+				toastr.success('Image uploaded successfuly!', 'success');
+				this.props.onUpload(response.data.sections[this.props.data.i].section_contents[this.props.data.j].photoURL);
 			})
 			.catch(function (error) {
 				console.log(error);
 			});
 	}
 
+	handleDelete() {
+		var selectedMenu = JSON.parse(localStorage.getItem("selectedMenu"));
+		let sectionTitle = selectedMenu.sections[this.props.data.i].section_title;
+		let itemTitle = selectedMenu.sections[this.props.data.i].section_contents[this.props.data.j].item_title;
+		this.props.onDelete(selectedMenu.id, sectionTitle, itemTitle );
+	}
+
 	render() {
-		let { imagePreviewUrl } = this.state;
+		// let { imagePreviewUrl } = this.state.imagePreviewUrl;
 		let $imagePreview = null;
-		if (imagePreviewUrl) {
+		if (this.state.imagePreviewUrl) {
 			// eslint-disable-next-line
-			$imagePreview = <img src={imagePreviewUrl} />;
+			$imagePreview = <img src={this.state.imagePreviewUrl} alt="" />;
 		} else {
 			$imagePreview = (
-				<div className="previewText">Please select an Image for Preview</div>
+				<div className="previewText">Select an Image</div>
 			);
 		}
 
@@ -106,11 +112,11 @@ class ImageUpload extends React.Component {
 								</GridItem>
 								{
 									this.state.imagePreviewUrl ?
-										<GridItem sm={4} style={{ textAlignLast: "right" }}>
-											<IconButton aria-label="delete" onClick={this.handleDelete}>
-												<DeleteIcon fontSize="small" />
-											</IconButton>
-										</GridItem> : ""
+									<GridItem sm={4} style={{ textAlignLast: "right" }}>
+										<IconButton aria-label="delete" onClick={this.handleDelete}>
+											<DeleteIcon fontSize="small" />
+										</IconButton>
+									</GridItem> : ""
 								}
 
 							</GridContainer>
@@ -122,6 +128,7 @@ class ImageUpload extends React.Component {
 			</GridContainer>
 		);
 	}
+
 }
 
 export default ImageUpload;

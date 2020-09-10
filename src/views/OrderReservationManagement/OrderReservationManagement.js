@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "hidden",
   }
 }));
-
 export default function FullWidthTabs() {
   const classes = useStyles();
   const classes1 = useStyles1();
@@ -36,7 +35,6 @@ export default function FullWidthTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   return (
     <div>
       <Header
@@ -50,7 +48,6 @@ export default function FullWidthTabs() {
         }}
       />
       <GridContainer>
-
         <GridItem sm={12}>
           <GridContainer style={{ marginTop: "150px" }} className={classes1.container}>
             <GridItem sm={9}>
@@ -79,7 +76,6 @@ export default function FullWidthTabs() {
               indicatorColor="primary"
               textColor="primary"
               variant="fullWidth"
-
             >
               <Tab label="Click & Collect" />
               <Tab label="Reservation" />
@@ -108,7 +104,6 @@ export default function FullWidthTabs() {
                 <Component3 />
               </GridContainer>
             </GridItem>
-
           </SwipeableViews>
         </div>
         </GridItem>

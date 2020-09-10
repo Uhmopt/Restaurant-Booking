@@ -17,6 +17,8 @@ import Component2 from './ReservationHistoryComponent'
 import Component3 from './TableHistoryComponent'
 import TextField from '@material-ui/core/TextField';
 import styles from "assets/jss/material-kit-react/views/landingPage.js";
+import BackButton from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
 const useStyles1 = makeStyles(styles);
 
 function TabPanel(props) {
@@ -73,16 +75,20 @@ export default function FullWidthTabs() {
 
   function handleStart (e) {
     setStartDate(e.target.value);
-    setSendData({ startDate, endDate, customer })
+    // setSendData({ startDate, endDate, customer })
   }
   
   function handleEnd (e) {
     setEndDate(e.target.value);
-    setSendData({ startDate, endDate, customer })
+    // setSendData({ startDate, endDate, customer })
   }
   
   function handleCustomer (e) {
     setCustomer(e.target.value);
+    // setSendData({ startDate, endDate, customer })
+  }  
+  function handleSearch (e) {
+    alert()
     setSendData({ startDate, endDate, customer })
   }
 
@@ -117,14 +123,25 @@ export default function FullWidthTabs() {
           </AppBar>
             <GridItem sm={12} style={{ paddingTop: "30px" }}>
               <GridContainer style={{ paddingBottom: "12px", borderRadius: "6px" }}>
-                  <GridItem sm={4}>
+                  <GridItem sm={3}>
                       <TextField style={{ width: "100%" }} onChange={handleStart} label="Start Date" type="date" value={startDate} id="standard-size-small" size="small" />
                   </GridItem>
-                  <GridItem sm={4}>
+                  <GridItem sm={3}>
                       <TextField style={{ width: "100%" }} onChange={handleEnd} label="End Date" type="date" value={endDate} id="standard-size-small" size="small" />
                   </GridItem>
-                  <GridItem sm={4}>
+                  <GridItem sm={3}>
                       <TextField style={{ width: "100%" }} onChange={handleCustomer} label="Customer Id" value={customer} id="standard-size-small" size="small" />
+                  </GridItem>
+                  <GridItem sm={3}>
+                    <BackButton
+                      variant="outlined"
+                      onClick={handleSearch}
+											color="primary"
+											className={classes1.button}
+											startIcon={<SearchIcon />}
+											style={{ width: "100%", marginTop: "10px" }}>
+											Search
+										</BackButton>
                   </GridItem>
 
               </GridContainer>

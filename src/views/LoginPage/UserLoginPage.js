@@ -191,9 +191,16 @@ export default function LoginPage(props) {
 									</Link>
 								</CardFooter>
 								<CardFooter className={classes_basic.cardFooter}>
+									<font style={{ fontSize: "14px", marginBottom: "4px", color: "#757575" }}>SignUp</font>
 									<Link to="/user-signup">
-										<Button simple color="info" style={{ margin: "0", paddingTop: "0px", paddingBottom: "20px" }}>
-											Don't you have an account? SignUp
+										<Button simple color="info" style={{ margin: "0", paddingTop: "0px", paddingBottom: "6px" }}>
+											customer
+										</Button>
+									</Link>
+									<font style={{ fontSize: "14px", marginBottom: "4px", color: "#757575" }}>Or</font>
+									<Link to="/suppiler-signup">
+										<Button simple color="info" style={{ margin: "0", paddingTop: "0px", paddingBottom: "6px" }}>
+											manager
 										</Button>
 									</Link>
 								</CardFooter>

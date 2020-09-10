@@ -21,32 +21,13 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-
-
-
 import axios from 'axios';
 
 const useStyles_landing = makeStyles(styles);
 
-const useStyles = makeStyles((theme) => ({
-	formControl: {
-	  width: "100%"
-	},
-	selectEmpty: {
-	  marginTop: theme.spacing(1),
-	},
-  }));
-
 export default function LoginPage(props) {
 
-  const [role, setRole] = useState("CUSTOMER");
   const history = useHistory();
-  const classSelect = useStyles();
   const classes = useStyles_landing();
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {
@@ -121,7 +102,7 @@ export default function LoginPage(props) {
       "username": uname,
       "password": upassword,
       "roles": [
-          role
+          "CUSTOMER"
       ]
     }
     var config = {
@@ -303,22 +284,6 @@ export default function LoginPage(props) {
                             }}
                           />
                       </GridItem>
-                      <GridItem sm={12}>
-												<FormControl className={classSelect.formControl}>
-													<InputLabel id="demo-simple-select-label">Role</InputLabel>
-													<Select
-													style={{ marginBottom: "30px", width: "100%" }}
-													labelId="demo-simple-select-label"
-													id="demo-simple-select"
-													fullWidth={true}
-													value={role}
-													onChange={(e)=>setRole(e.target.value)}
-													>
-														<MenuItem value={'MANAGER'}>MANAGER</MenuItem>
-														<MenuItem value={'CUSTOMER'}>CUSTOMER</MenuItem>
-													</Select>
-												</FormControl>
-											</GridItem>
                       <GridItem md={12} xs={12} style={{ paddingTop: "16px" }}>
                         <Button color="info" size="lg" style={{margin:"0", width: "100%"}} type="submit">
                           SignUp

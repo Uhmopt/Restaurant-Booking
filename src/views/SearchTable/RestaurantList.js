@@ -131,7 +131,6 @@ export default function SectionTabs(props) {
 												</GridContainer>
 												<GridContainer>
 													<GridItem sm={3}>Date:</GridItem>
-													{console.log(times)}
 													<GridItem sm={6}>{times.length > 0 ? secondsToHms(times[0][0], "d") : ""} {getToday(secondsToHms(times[0], "d"))}</GridItem>
 												</GridContainer>
 

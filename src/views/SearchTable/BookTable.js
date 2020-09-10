@@ -41,7 +41,7 @@ export default function ResponsiveDialog(props) {
             toastr.success('Your reqest accepted successfully!', "Success!");
         })
         .catch(function (error) {
-            toastr.error('Sorry, not complete!', error);
+            toastr.error('This establishment does not accept reservations', 'Sorry!');
             console.log(error);
         });
     }else {
@@ -68,19 +68,28 @@ export default function ResponsiveDialog(props) {
     }
 
 
-    function secondsToHms(d) {
+//Change seconds to time
+function secondsToHms(d) {
 
-		var sec_num = Number(d) // don't forget the second param
-		var hours   = Math.floor(sec_num / 3600);
-		var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-		var seconds = sec_num - (hours * 3600) - (minutes * 60);
-	
-		if (hours   < 10) {hours   = "0"+hours;}
-		if (minutes < 10) {minutes = "0"+minutes;}
-		if (seconds < 10) {seconds = "0"+seconds;}
-		return hours + ':' + minutes;
-    }
-    console.log(props.time);
+	// unix timestamp
+	var ts = d;
+
+	// convert unix timestamp to milliseconds
+	var ts_ms = ts * 1000;
+
+	// initialize new Date object
+	var date_ob = new Date(ts_ms);
+
+	// hours as 2 digits (hh)
+	var hours = ("0" + date_ob.getHours()).slice(-2);
+
+	// minutes as 2 digits (mm)
+	var minutes = ("0" + date_ob.getMinutes()).slice(-2);
+
+	// date & time as YYYY-MM-DD hh:mm:ss format: 
+	return (hours + ":" + minutes);
+
+}
 
     return (
     <div>
@@ -89,11 +98,11 @@ export default function ResponsiveDialog(props) {
             aria-labelledby="responsive-dialog-title"
             maxWidth="sm"
         >
-            <DialogTitle style={{background: "#f2f2f2",paddingBottom: "10px"}}><p style={{fontSize: "1rem", fontWeight:"bold"}}>{props.data[1].name}</p></DialogTitle>
+            <DialogTitle style={{background: "#f2f2f2",paddingBottom: "10px"}}><p style={{fontSize: "1rem", fontWeight:"bold"}}>Make Reservation</p></DialogTitle>
             <DialogContent  style={{minHeight: "200px"}}>
                 <GridContainer>
                     <GridItem sm={6} style={{ fontSize: "18px", fontWeight: "500" }}>Name:</GridItem>
-                    <GridItem sm={6} style={{ fontSize: "18px", fontWeight: "400" }}>{props.data[1].name}</GridItem>
+                    <GridItem sm={6} style={{ fontSize: "18px", fontWeight: "400" }}>{localStorage.getItem("username")}</GridItem>
                     <GridItem sm={6} style={{ fontSize: "18px", fontWeight: "500", marginTop: "24px" }}>Address:</GridItem>
                     <GridItem sm={6} style={{ fontSize: "18px", fontWeight: "400", marginTop: "24px" }}>{objectToString(props.data[1].address, 1)}</GridItem>
                     <GridItem sm={6} style={{ fontSize: "18px", fontWeight: "500", marginTop: "24px" }}>Phone:</GridItem>

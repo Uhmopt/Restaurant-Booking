@@ -22,7 +22,11 @@ import Dialog from '@material-ui/core/Dialog';
 
 import styles1 from "assets/jss/material-kit-react/views/componentsSections/typographyStyle.js";
 import styles2 from "assets/jss/material-kit-react/views/componentsSections/basicsStyle.js";
-import food1 from "assets/img/food/food1.png";
+
+// toastr
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
+import axios from 'axios'
 
 const useStyles1 = makeStyles(styles1);
 const useStyles2 = makeStyles(styles2);
@@ -63,6 +67,11 @@ export default function LoginPage(props) {
 	},
 	// eslint-disable-next-line
 	[]);
+
+	useEffect(() => {
+		if(!!state.photoURL)
+			console.log(state.photoURL.replace("<sizeHere>", "desktop"))
+	}, [state]);
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -124,6 +133,28 @@ export default function LoginPage(props) {
 		handleClose();
 	};
 
+	function handleImageDelete(id, sectionTitle, itemTitle ) {
+		var config = {
+		method: 'delete',
+		url: `https://cors-anywhere.herokuapp.com/https://ontab.co.uk/v1/menu/removePhoto/${id}/${sectionTitle}/${itemTitle}`,
+		headers: { }
+		};
+
+		axios(config)
+		.then(function (response) {
+			setState(prevState => ({ ...prevState, photoURL: "" }))
+			toastr.success('Image removed successfuly!', 'success');
+
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	};
+
+	function handleImageUpload(url) {
+		setState(prevState => ({ ...prevState, photoURL: url }));
+	}
+	
 	const checkedA = props.data.gluten_free;
 	const checkedB = props.data.vegetarian;
 	const checkedC = props.data.locally_sourced;
@@ -135,12 +166,15 @@ export default function LoginPage(props) {
 		<div>
 			<GridContainer>
 				<GridItem sm={4} style={{ minHeight: "250px", paddingLeft: "50px", paddingTop: "20px" }}>
-					<img
-						src={food1}
-						alt="..."
-						style={{ height: "150px" }}
-						className={classes1.imgRounded + " " + classes1.imgFluid}
-					/>
+					{
+						state.photoURL&&state.photoURL!==""&&
+						<img
+							src={state.photoURL.replace("<sizeHere>", "desktop")}
+							alt="..."
+							style={{ height: "150px" }}
+							className={classes1.imgRounded + " " + classes1.imgFluid}
+						/>
+					}
 				</GridItem>
 				<GridItem sm={8}>
 					<GridContainer>
@@ -275,8 +309,8 @@ export default function LoginPage(props) {
 							<GridContainer>
 
 								{
-									props.data.item_title ?
-										<ImageUpload data={props.no} /> : ""
+									props.data.item_title&&localStorage.getItem('menuFlag') === "false" ?
+										<ImageUpload data={props.no} url={state.photoURL} onUpload={handleImageUpload} onDelete={handleImageDelete} /> : ""
 								}
 							</GridContainer>
 						</GridItem>

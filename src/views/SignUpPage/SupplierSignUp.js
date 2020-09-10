@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
@@ -12,15 +13,20 @@ import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
-import axios from "axios";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import image from "assets/img/image2.jpg";
+import image from "assets/img/bg7.jpg";
+
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import axios from 'axios';
 
 const useStyles_landing = makeStyles(styles);
-
 export default function LoginPage(props) {
- 
+
+  const history = useHistory();
   const classes = useStyles_landing();
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {
@@ -28,15 +34,34 @@ export default function LoginPage(props) {
   }, 700);
 
   const { ...rest } = props;
-
-  const history = useHistory();
   
   const [uname, setName] = useState("");
   const [upassword, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
   const [firstname, setFirstname] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("+44");
+
+  const [values, setValues] = React.useState({
+    amount: '',
+    password: '',
+    weight: '',
+    weightRange: '',
+    showPassword: false,
+  });
+
+  React.useEffect(() => {
+    handleValidationRule();
+  }, []);
+  
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   function handleName(e) {
     e.preventDefault()
@@ -68,7 +93,6 @@ export default function LoginPage(props) {
   }  
 
   function submitRegister(e) {
-
     var userdata = {
       "firstName": firstname,
       "surname": surname,
@@ -77,7 +101,7 @@ export default function LoginPage(props) {
       "username": uname,
       "password": upassword,
       "roles": [
-          "SUPPLIER"
+          "MANAGER"
       ]
     }
     var config = {
@@ -91,10 +115,33 @@ export default function LoginPage(props) {
     request
     .then(response => {
       if (response.data) {
-          localStorage.setItem('user', JSON.stringify(response.data));
           history.push('/account-confirm');
       }
     });
+
+  }
+
+  function handleValidationRule() {
+		ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+			if (value !== document.getElementById('standard-adornment-password').value) {
+					return false;
+			}
+			return true;
+		});
+
+      ValidatorForm.addValidationRule('phone', (value) => {
+        if (value.length < 12) {
+            return false;
+        }
+        return true;
+      });
+
+      ValidatorForm.addValidationRule('password', (value) => {
+        if (value.length < 8) {
+            return false;
+        }
+        return true;
+      });
   }
   return (
     <div>
@@ -118,7 +165,7 @@ export default function LoginPage(props) {
             <GridItem xs={12} sm={12} md={6}>
               <Card className={classes[cardAnimaton]}>
                 <CardHeader color="primary" className={classes.cardHeader}>
-                  <h3>Suppiler SignUp</h3>
+                  <h3>Supplier SignUp</h3>
                 </CardHeader>
                 <CardBody style={{paddingBottom: "0"}}>
                   <ValidatorForm
@@ -151,7 +198,6 @@ export default function LoginPage(props) {
                         />
                       </GridItem>
                       <GridItem xs={12}>
-                        
                         <TextValidator
                           label="Email"
                           onChange={handleEmail}
@@ -180,23 +226,64 @@ export default function LoginPage(props) {
                           name="phone"
                           value={phone}
                           style={{width: "100%", marginBottom: "30px"}}
-                          validators={['required']}
-                          errorMessages={['this field is required', 'Phone is not valid']}
+                          validators={['phone', 'required']}
+                          errorMessages={['Phone number should be over 11 letters', 'Phone is not valid']}
                         />
                       </GridItem>
-                      <GridItem md={6} xs={12}>
+                      <GridItem md={12} xs={12}>
                         <TextValidator
-                            label="Password"
-                            onChange={handlePassword}
-                            name="upassword"
-                            type="password"
-                            value={upassword}
-                            style={{width: "100%", marginBottom: "40px"}}
-                            validators={['required']}
-                            errorMessages={['this field is required', 'Password is not valid']}
+                          id="standard-adornment-password"
+                          value={upassword}
+                          label="Password"
+                          fullWidth={true}
+                          onChange={handlePassword}
+                          validators={['password', 'required']}
+                          errorMessages={['Password length should be over 8 letters', 'Password is not valid']}
+                          type={values.showPassword ? 'text' : 'password'}
+                          style={{width: "100%", marginBottom: "30px"}}
+                          InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                      <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                      >
+                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                      </IconButton>
+                                  </InputAdornment>
+                                )
+                          }}
                         />
                       </GridItem>
-                      <GridItem md={6} xs={12}>
+
+                      <GridItem md={12} xs={12}>
+                          <TextValidator
+                            id="standard-adornment-password"
+                            value={repassword}
+                            label="Confirm Password"
+                            fullWidth={true}
+                            validators={['isPasswordMatch', 'required']}
+                            errorMessages={['Password not matched', 'Confirm the password']}
+                            style={{width: "100%", marginBottom: "30px"}}
+                            onChange={(e)=>setRepassword(e.target.value)}
+                            type={values.showPassword ? 'text' : 'password'}
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                      aria-label="toggle password visibility"
+                                      onClick={handleClickShowPassword}
+                                      onMouseDown={handleMouseDownPassword}
+                                    >
+                                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                              )
+                            }}
+                          />
+                      </GridItem>
+                      <GridItem md={12} xs={12} style={{ paddingTop: "16px" }}>
                         <Button color="primary" size="lg" style={{margin:"0", width: "100%"}} type="submit">
                           SignUp
                         </Button>
@@ -208,7 +295,6 @@ export default function LoginPage(props) {
             </GridItem>
           </GridContainer>
         </div>
-        {/* <Footer whiteFont /> */}
       </div>
     </div>
   );

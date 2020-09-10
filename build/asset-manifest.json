@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/static/css/main.93b13c73.chunk.css",
-    "main.js": "/static/js/main.0c843d5d.chunk.js",
-    "main.js.map": "/static/js/main.0c843d5d.chunk.js.map",
+    "main.js": "/static/js/main.9c18da47.chunk.js",
+    "main.js.map": "/static/js/main.9c18da47.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.47788c5d.js",
     "runtime-main.js.map": "/static/js/runtime-main.47788c5d.js.map",
     "static/css/2.9d38bd39.chunk.css": "/static/css/2.9d38bd39.chunk.css",
-    "static/js/2.248d73f5.chunk.js": "/static/js/2.248d73f5.chunk.js",
-    "static/js/2.248d73f5.chunk.js.map": "/static/js/2.248d73f5.chunk.js.map",
+    "static/js/2.797fde9c.chunk.js": "/static/js/2.797fde9c.chunk.js",
+    "static/js/2.797fde9c.chunk.js.map": "/static/js/2.797fde9c.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.a4c509b1158250b386135fe78964e4ce.js": "/precache-manifest.a4c509b1158250b386135fe78964e4ce.js",
+    "precache-manifest.1598d4e7c1e87d3e7b33c7a75661e60a.js": "/precache-manifest.1598d4e7c1e87d3e7b33c7a75661e60a.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.9d38bd39.chunk.css.map": "/static/css/2.9d38bd39.chunk.css.map",
     "static/css/main.93b13c73.chunk.css.map": "/static/css/main.93b13c73.chunk.css.map",
-    "static/js/2.248d73f5.chunk.js.LICENSE.txt": "/static/js/2.248d73f5.chunk.js.LICENSE.txt",
+    "static/js/2.797fde9c.chunk.js.LICENSE.txt": "/static/js/2.797fde9c.chunk.js.LICENSE.txt",
     "static/media/1.jpg": "/static/media/1.bc4d3940.jpg",
     "static/media/avatar.jpg": "/static/media/avatar.f1d71f77.jpg",
     "static/media/bg.jpg": "/static/media/bg.e5241971.jpg",
@@ -25,7 +25,6 @@
     "static/media/clem-onojegaw.jpg": "/static/media/clem-onojegaw.c058841b.jpg",
     "static/media/clem-onojeghuo.jpg": "/static/media/clem-onojeghuo.216ef03c.jpg",
     "static/media/cynthia-del-rio.jpg": "/static/media/cynthia-del-rio.9813593c.jpg",
-    "static/media/food1.png": "/static/media/food1.55c14915.png",
     "static/media/gluten_free.svg": "/static/media/gluten_free.27834751.svg",
     "static/media/gradient.jpg": "/static/media/gradient.4cd93995.jpg",
     "static/media/gradient1.jpg": "/static/media/gradient1.5fc57479.jpg",
@@ -59,8 +58,8 @@
   "entrypoints": [
     "static/js/runtime-main.47788c5d.js",
     "static/css/2.9d38bd39.chunk.css",
-    "static/js/2.248d73f5.chunk.js",
+    "static/js/2.797fde9c.chunk.js",
     "static/css/main.93b13c73.chunk.css",
-    "static/js/main.0c843d5d.chunk.js"
+    "static/js/main.9c18da47.chunk.js"
   ]
 }

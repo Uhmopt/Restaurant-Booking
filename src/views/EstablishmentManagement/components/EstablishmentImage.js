@@ -5,16 +5,19 @@ import GridItem from "components/Grid/GridItem.js";
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
-
 import "./styles.css";
 import image1 from 'assets/img/upload-button-image.png';
 import axios from 'axios'
+
+// toastr
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
+
 class ImageUpload extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { file: "", imagePreviewUrl: "" };
 	}
-
 	_handleImageChange(e) {
 		e.preventDefault();
 		let reader = new FileReader();
@@ -30,17 +33,15 @@ class ImageUpload extends React.Component {
 		reader.readAsDataURL(file);
 
 		setTimeout(() => {
-			this.props.image({
-				file: file,
-				imagePreviewUrl: reader.result
-			});
+			this.props.image(
+				reader.result
+			);
 		}, 300);
-
-
-
 	}
 	handleRemove = () => {
-		this.setState({ file: "", imagePreviewUrl: "" });
+		this.props.image(
+			""
+		);
 		var axios = require('axios');
 
 		var config = {
@@ -74,25 +75,20 @@ class ImageUpload extends React.Component {
 			},
 			data: data
 		};
-
 		axios(config)
 			.then(function (response) {
-				this.setState({
-					imagePreviewUrl: response.data.logoUrl
-				});
+				toastr.success('Image uploaded successfuly!', 'success');
+				console.log(response.data)
 			})
 			.catch(function (error) {
 			});
 	}
 	render() {
-		let { imagePreviewUrl } = this.state;
 		let $imagePreview = null;
-		if (imagePreviewUrl) {
-			// eslint-disable-next-line
-			$imagePreview = <img src={imagePreviewUrl} />;
+		if (this.props.imageUrl !== "") {
+			$imagePreview = <img src={this.props.imageUrl && this.props.imageUrl} alt=""/>;
 		} else {
 			$imagePreview = (
-				// eslint-disable-next-line
 				<div className="previewText">Restaruant Image</div>
 			);
 		}
@@ -145,17 +141,17 @@ class ImageUpload extends React.Component {
 										>
 											Upload
 									</Button>
-									<Button
-										style={{
-											marginLeft: "6px",
-											padding: "8px",
-											boxSizing: "content-box"
-										}}
-										onClick={this.handleRemove}
-										variant="contained"
-										color="secondary"
-										startIcon={<DeleteIcon />}
-									>
+										<Button
+											style={{
+												marginLeft: "6px",
+												padding: "8px",
+												boxSizing: "content-box"
+											}}
+											onClick={this.handleRemove}
+											variant="contained"
+											color="secondary"
+											startIcon={<DeleteIcon />}
+										>
 											Delete
 									</Button>
 

@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function Components(props) {
-  console.log(props.list)
 	const history = useHistory();
   const classes = useStyles();
 
@@ -45,10 +44,10 @@ export default function Components(props) {
                         component="img"
                         alt="Contemplative Reptile"
                         height="140"
-                        image={"https://media-cdn.tripadvisor.com/media/photo-s/01/0a/b6/1e/reading-abbey-ruins.jpg"}
+                        image={element.logoURL.replace("<sizeHere>", "desktop")}
                         title="Contemplative Reptile"
                       />
-                      <CardContent>
+                      <CardContent style={{ minHeight: "230px" }}>
                         <Typography gutterBottom variant="h5" component="h2">
                           {element.name}
                         </Typography>

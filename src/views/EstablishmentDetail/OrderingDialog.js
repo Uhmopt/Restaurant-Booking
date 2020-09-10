@@ -19,12 +19,12 @@ export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
   const [basket, setBasket] = React.useState([]);
   const [comments, setComments] = React.useState("");
-  const [dateTime, setDateTime] = React.useState( "2020-08-08T22:22" );
+  const [dateTime, setDateTime] = React.useState((new Date()).toISOString().substr(0,16));
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     setOpen(props.openState);
     setBasket(JSON.parse(localStorage.getItem("basket")));
-  },[props])
+  }, [props])
 
   const handleClose = () => {
     props.onClose()
@@ -35,7 +35,7 @@ export default function FormDialog(props) {
     if (localStorage.getItem("access_token")) {
       console.log(basket)
       let item = {};
-      basket.forEach((element)=>{
+      basket.forEach((element) => {
         item[element.title] = element.mount
       })
       var data = {
@@ -43,9 +43,9 @@ export default function FormDialog(props) {
         "items": item,
         "comments": comments,
         "total": caculateTotalPrice(basket),
-        "time": (new Date(dateTime)).getTime() / 1000
+        "time": (new Date(dateTime)).valueOf()
       }
-      
+
 
       var config = {
         method: 'post',
@@ -54,23 +54,23 @@ export default function FormDialog(props) {
           "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
           'Content-Type': 'application/json'
         },
-        data : data
+        data: data
       };
-      
+
       axios(config)
-      .then(function (response) {
-        toastr.success('Order booked successfully', 'Welcome');
-        localStorage.setItem("basket", []);
-      })
-      .catch(function (error) {
-        toastr.error('Error occured!', error);
-        console.log(error);
-      });
+        .then(function (response) {
+          toastr.success('Order booked successfully', 'Welcome');
+          localStorage.setItem("basket", []);
+        })
+        .catch(function (error) {
+          toastr.error("This establishment does not accept takeaway orders at the time provided", "Sorry!");
+          console.log(error);
+        });
       props.onClose()
     } else {
       toastr.warning('Login firt please', 'Note');
     }
-    
+
   };
 
   const handleDelete = (i) => {
@@ -78,6 +78,7 @@ export default function FormDialog(props) {
     fk_basket.splice(i, 1);
     localStorage.setItem("basket", JSON.stringify(fk_basket));
     setBasket(fk_basket);
+    props.onDelete();
   };
 
   const caculateTotalPrice = (data) => {
@@ -93,120 +94,116 @@ export default function FormDialog(props) {
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" maxWidth="lg">
         <DialogTitle id="form-dialog-title">
           <GridContainer>
-            <GridItem sm={1} style={{paddingTop: "4px", paddingLeft: "26px"}}><AddShoppingCartIcon /></GridItem>
+            <GridItem sm={1} style={{ paddingTop: "4px", paddingLeft: "26px" }}><AddShoppingCartIcon /></GridItem>
             <GridItem sm={11}>Items</GridItem>
           </GridContainer>
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Establishment Title: <span style={{fontWeight: "bold"}}>The Lynhert</span><br/>
-            Order Address: <span style={{fontWeight: "bold"}}>White House, Washington, US, New York</span>
+            Establishment Title: <span style={{ fontWeight: "bold" }}>The Lynhert</span><br />
+            Establishment Address: <span style={{ fontWeight: "bold" }}>White House, Washington, US, New York</span>
           </DialogContentText>
-          
 
-          <GridContainer style={{ padding: "20px 8px 17px", border: "1px solid #888", borderRadius: "9px", fontWeight: "400"}}>
-            <GridItem sm={12}>
-              <h4 style={{borderLeft: "4px solid #8bc34a", paddingLeft: "10px"}}>Menu Select</h4>
-            </GridItem>
+
+          <GridContainer style={{ padding: "20px 8px 17px", border: "1px solid #888", borderRadius: "9px", fontWeight: "400" }}>
             {
-              basket?
-              basket.map((element, i)=>{
-
-                return (
-                  <GridContainer key={i}>
-                    <GridItem sm={4}  style={{width:"100%", alignSelf: "center", fontSize: "24px" }}>
-                      <TextField
-                        id="standard-read-only-input"
-                        label="MenuItem"
-                        value={element.title}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        style={{width: "100%"}}
-                      />
-                    </GridItem>
-
-                    <GridItem sm={2}  style={{width:"100%", alignSelf: "center", fontSize: "24px" }}>
-                      <TextField
-                        id="standard-read-only-input"
-                        label="Price"
-                        value={element.price}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        style={{width: "100%"}}
-                      /> 
-                      
-                    </GridItem>
-
-                    <GridItem sm={2} width="100%">
-                      <TextField
-                        id="standard-number"
-                        label="Mount"
-                        type="number"
-                        value={Number(element.mount)}
-                        width="100%"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        style={{width: "100%"}}
-                      />
-                    </GridItem>
-                    
-                    <GridItem sm={2}  style={{width:"100%", alignSelf: "center", fontSize: "24px" }}>
-                      <TextField
+              basket ?
+                basket.map((element, i) => {
+                  return (
+                    <GridContainer key={i}>
+                      <GridItem sm={4} style={{ width: "100%", alignSelf: "center", fontSize: "24px" }}>
+                        <TextField
                           id="standard-read-only-input"
-                          label="Total(£)"
-                          value={Number(element.mount) *  Number(element.price)}
+                          label="MenuItem"
+                          value={element.title}
                           InputProps={{
                             readOnly: true,
                           }}
-                          style={{width: "100%"}}
-                      />
-                    </GridItem>
-                    
-                    <GridItem sm={2} width="100%">
-                      <Button color="inherit" size="medium" style={{marginTop: "7px"}} onClick={()=>handleDelete(i)}>
+                          style={{ width: "100%" }}
+                        />
+                      </GridItem>
+
+                      <GridItem sm={2} style={{ width: "100%", alignSelf: "center", fontSize: "24px" }}>
+                        <TextField
+                          id="standard-read-only-input"
+                          label="Price"
+                          value={element.price}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          style={{ width: "100%" }}
+                        />
+
+                      </GridItem>
+
+                      <GridItem sm={2} width="100%">
+                        <TextField
+                          id="standard-number"
+                          label="Mount"
+                          type="number"
+                          value={Number(element.mount)}
+                          width="100%"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          style={{ width: "100%" }}
+                        />
+                      </GridItem>
+
+                      <GridItem sm={2} style={{ width: "100%", alignSelf: "center", fontSize: "24px" }}>
+                        <TextField
+                          id="standard-read-only-input"
+                          label="Total(£)"
+                          value={Number(element.mount) * Number(element.price)}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          style={{ width: "100%" }}
+                        />
+                      </GridItem>
+
+                      <GridItem sm={2} width="100%">
+                        <Button color="inherit" size="medium" style={{ marginTop: "7px" }} onClick={() => handleDelete(i)}>
                           <DeleteIcon />
-                      </Button>
-                    </GridItem>
-                  </GridContainer>
-                )
-              }):""
+                        </Button>
+                      </GridItem>
+                    </GridContainer>
+                  )
+                }) : ""
             }
 
-       
-                        
-              
+
+
+
           </GridContainer>
 
-          <GridContainer style={{marginTop: "20px"}}>
-              <GridItem sm={4}>
-                  <TextField
-                      margin="dense"
-                      id="name"
-                      label="Comments"
-                      type="text"
-                      fullWidth
-                      onChange={(e)=>setComments(e.target.value)}
-                      multiline
-                  />
-              </GridItem>
-              <GridItem sm={5}>
-                  <TextField
-                      id="datetime-local"
-                      type="datetime-local"
-                      style={{width: "220px", marginTop: "21px"}}
-                      value={dateTime}
-                      onChange={(e)=>setDateTime(e.target.value)}
-                      InputLabelProps={{
-                      shrink: true,
-                      }}
-                  />
-              </GridItem>
-              <GridItem sm={3}>
-                  <h3 style={{marginLeft: "0px"}}>Total Price:{basket?caculateTotalPrice(basket):""}£</h3>
-              </GridItem>
+          <GridContainer style={{ marginTop: "20px" }}>
+            <GridItem sm={4}>
+              <TextField
+                margin="dense"
+                id="name"
+                label="Comments"
+                type="text"
+                fullWidth
+                onChange={(e) => setComments(e.target.value)}
+                multiline
+              />
+            </GridItem>
+            <GridItem sm={5}>
+              <TextField
+                id="datetime-local"
+                type="datetime-local"
+                style={{ width: "220px", marginTop: "21px" }}
+                value={dateTime}
+                onChange={(e) => setDateTime(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </GridItem>
+            <GridItem sm={3}>
+              <h3 style={{ marginLeft: "0px" }}>Total Price:{basket ? caculateTotalPrice(basket) : 0}£</h3>
+            </GridItem>
           </GridContainer>
 
         </DialogContent>
@@ -215,7 +212,7 @@ export default function FormDialog(props) {
             Cancel
           </Button>
           <Button onClick={handleSubmit} color="primary">
-            Subscribe
+            Submit Order
           </Button>
         </DialogActions>
       </Dialog>
